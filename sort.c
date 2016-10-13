@@ -1,5 +1,3 @@
-# Sort_strings
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -114,7 +112,6 @@ int main()
 			i++;
 		}
 	} while (c != EOF);
-	printf("Quality strings: %d\n", i);
 	int j;	
 	point *a = (point *)malloc(sizeof(point) * i);       // Выделили память для массива указателей на указатели.
 	rewind(f_in);                                       //Сдвинули каретку в начало файла.
@@ -126,19 +123,38 @@ int main()
 		int k = 0;
 		while (((c = fgetc(f_in)) != '\n')&&(c != EOF))
 		{
-			a[j][k++] = c;                                       //Прочитали каждую строку посимвольно, добавляя в конец нулевой символ.
+			a[j][k++] = c;
 		}
 		a[j][k] = '\0';
 	}
 	fclose(f_in);	
 	
-	bubble_sort(a, i);
+	//bubble_sort(a, i);
 	//insertion_sort(a, i);
-	//quick_sort(a, i-1);
+	//quick_sort(a,i-1);
+	
+	printf("Choose a kind of sort:\nBubble sort -> 1\nInsertion sort -> 2\nQuick sort -> 3\n  Your choose: ");
+	scanf("%d", &j);
+	switch(j)
+	{
+		case 1:
+			bubble_sort(a, i);
+			break;
+		case 2:
+			insertion_sort(a, i);
+			break;
+		case 3:
+			quick_sort(a, i-1);
+			break;
+		default:
+			quick_sort(a, i-1);
+			break;
+	}
 	
 	FILE *f_out = fopen("out.txt", "w");
 	for (j = 0; j != i; j++)
 	{
+	 //f(f_out, '%d:', j+1);
 	 fputs(a[j], f_out);
 	 fputc('\n',f_out);	 //Вывели отсортированный массив строк в файл и на экран.
 	 printf("%s\n",a[j]);
