@@ -86,6 +86,105 @@ void insertion_sort(point *array, int n)
 	}
  }
  
+void copy_array(point *a, int n, point *b)
+ {
+ 	for (int i = 0; i != n; i++)
+ 	{
+ 		b[i] = a[i]; 	
+	}
+ }
+ 
+void merge(point *a, int fir, point *b, int sec, point *c)
+ { 
+ 	int l = 0;
+	int r = 0;
+	int i = 0;
+	while((l < fir) && (r < sec))
+	{
+		if (comparator(a[l],b[r]))
+		{
+			c[i] = b[r++];
+		}
+		else
+		{
+			c[i] = a[l++];
+		}
+		i++;
+	}
+	while(l < fir)
+	{
+		c[i++] = a[l++];
+	}
+	while(r < sec)
+	{
+		c[i++] = b[r++];
+	}	
+ }
+
+void merge_sort_recursively(point *a, point *b, int  n , int *whereis)
+ {
+	*whereis = 0;
+	if (n < 2)
+	{
+		return;
+	}
+	if (n == 2)
+	{
+		if (comparator(a[0], a[1]))
+		{
+			swap(&a[0], &a[1]);	
+		}
+	}
+	
+	int middle = n / 2;
+	int res_a, res_b;
+	
+	merge_sort_recursively(a, b, middle, &res_a);
+	merge_sort_recursively(a + middle, b + middle, n - middle, &res_b);
+	
+	if (res_a != res_b)
+	{
+		if (res_a == 0)
+	 	{
+	 		copy_array(b + middle, n - middle, a + middle);
+	 	}
+	 	else
+	 	{
+	 		copy_array(a + middle, n - middle, b + middle);
+	 	}
+	}
+	if (res_a == 0)  
+	{
+		merge(a, middle, a+middle, n-middle, b);
+		*whereis = 1;
+	}
+	else
+	{
+	 	merge(b, middle, b+middle, n-middle, a);
+		*whereis = 0;
+	}
+ }
+ 
+void merge_sort(point *a, int n)
+ {
+	if (n <= 1) return;
+	if (n == 2) 
+	{
+		if (comparator(a[0],a[1]))
+		{
+			swap(&a[0],&a[1]);
+		}
+		return;
+	}
+	int where_m = 0;//  0== in massive a
+	point *b = (point*)malloc(sizeof(point)*n);
+	merge_sort_recursively(a, b, n, &where_m);
+	if (where_m!=0)
+	{
+		copy_array(b, n, a);
+	}
+	free(b);
+ }
 
 
 int main()
@@ -99,20 +198,24 @@ int main()
 		len_str[i] = 0;                           // Инициализировали его нулями.
 	}
 	i = 0;
-	int c;
+	char c;
 	do // Посчитали длинну каждой строки.
 	{
 		c = fgetc(f_in);
-		if ((c != '\n')&&(c != EOF)) 
+		if (c != EOF)
 		{
-			len_str[i]++;
-		}
-		else
-		{
-			i++;
+			if ((c != '\n')) 
+			{
+				len_str[i]++;
+			}
+			else
+			{
+				i++;
+			}
 		}
 	} while (c != EOF);
-	int j;	
+	int j;
+	printf("Quantity of strings: %d\n", i);
 	point *a = (point *)malloc(sizeof(point) * i);       // Выделили память для массива указателей на указатели.
 	rewind(f_in);                                       //Сдвинули каретку в начало файла.
 	fscanf(f_in, "%d\n", &n); 	// Пропустили первую строку.
@@ -127,13 +230,17 @@ int main()
 		}
 		a[j][k] = '\0';
 	}
-	fclose(f_in);	
+	fclose(f_in);
+	free(len_str);	
+	
+	
+	//printf("%s %d\n",a[3] , len_str[3]);
 	
 	//bubble_sort(a, i);
 	//insertion_sort(a, i);
 	//quick_sort(a,i-1);
 	
-	printf("Choose a kind of sort:\nBubble sort -> 1\nInsertion sort -> 2\nQuick sort -> 3\n  Your choose: ");
+	printf("Choose a kind of sort:\nBubble sort -> 1\nInsertion sort -> 2\nQuick sort -> 3\nMerge sort -> 4\n  Your choose: ");
 	scanf("%d", &j);
 	switch(j)
 	{
@@ -145,6 +252,9 @@ int main()
 			break;
 		case 3:
 			quick_sort(a, i-1);
+			break;
+		case 4: 
+			merge_sort(a, i);
 			break;
 		default:
 			quick_sort(a, i-1);
@@ -158,7 +268,9 @@ int main()
 	 fputs(a[j], f_out);
 	 fputc('\n',f_out);	 //Вывели отсортированный массив строк в файл и на экран.
 	 printf("%s\n",a[j]);
+	 free(a[j]);
 	}
 	fclose(f_out);
+	free(a);
 	return 0;
  }
