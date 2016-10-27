@@ -1,0 +1,27 @@
+/* File c_quick_sort.c */
+
+#include "h_quick_sort.h"
+#include "h_swap.h"
+#include "h_comparator.h"
+
+void quick_sort(char** array, int n)
+ {
+	 int l = 0, r = n;
+	 char* p;
+	 p = array[n / 2];
+	 while(l <= r)
+	 {
+		 while(comparator(p, array[l]))
+			 l++;
+		 while(comparator(array[r], p))
+			 r--;
+		 if (l <= r)
+		 {
+			 swap(&array[l++], &array[r--]);
+		 }
+	 }
+	 if (r > 0)
+		 quick_sort(array, r);
+	 if (n > l)
+		 quick_sort(array + l, n-l);	 
+ }
