@@ -11,16 +11,21 @@
 
 
 
-int main()
- {
+int main(int argc, char **argv)
+{
+	if (argc != 3)
+	{
+    		printf("Unexpected number of arguments\n");
+    		exit(1);
+	}	
 	int n, i;
-	FILE *f_in = fopen("in.txt", "r");                    //Открыли файл для чтения.
+	n = atoi(argv[1]);			// Прочитали число n, тогда у нас не больше n строк.
+	FILE *f_in = fopen(argv[2], "r");                    //Открыли файл для чтения.
 	if (f_in == 0) 
 	{
 		printf("Error opening input file\n");
 		exit(1);
-	}
-	fscanf(f_in, "%d\n", &n);                           // Прочитали число n, тогда у нас не больше n строк.
+	}                           
 	int *len_str = (int*)malloc(sizeof(int) * n);     // Объявили массив для длин строк.
 	for (i = 0; i != n; i++)
 	{
@@ -46,9 +51,7 @@ int main()
 	int j;
 	printf("Quantity of strings: %d\n", i);
 	char** a = (char**)malloc(sizeof(char*) * i);       // Выделили память для массива указателей на указатели.
-	rewind(f_in);                                       //Сдвинули каретку в начало файла.
-	fscanf(f_in, "%d\n", &n); 	// Пропустили первую строку.
-	
+	rewind(f_in);                                       //Сдвинули каретку в начало файла.	
 	for(j = 0; j != i; j++)  
 	{
 		a[j] = (char*)malloc(sizeof(char)*(len_str[j]+1));        // Веделили память для каждой строки.
@@ -63,7 +66,7 @@ int main()
 	free(len_str);	
 	
 	printf("Choose a kind of sort:\nBubble sort -> 1\nInsertion sort -> 2\nQuick sort -> 3\nMerge sort -> 4\n  Your choose: ");
-	scanf("%d", &j);
+	fscanf(stdin, "%d", &j);
 	switch(j)
 	{
 		case 1:
@@ -83,16 +86,28 @@ int main()
 			break;
 	}
 	
-	FILE *f_out = fopen("out.txt", "w");
 	for (j = 0; j != i; j++)
 	{
-	 //f(f_out, '%d:', j+1);
-	 fputs(a[j], f_out);
-	 fputc('\n',f_out);	 //Вывели отсортированный массив строк в файл и на экран.
-	 printf("%s\n",a[j]);
+	 fputs(a[j], stdout);
+	 fputc('\n',stdout);	 //Вывели отсортированный массив строк на экран.
 	 free(a[j]);
 	}
-	fclose(f_out);
 	free(a);
 	return 0;
- }
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
