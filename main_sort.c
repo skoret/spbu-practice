@@ -15,18 +15,18 @@ int main(int argc, char **argv)
 {
 	if (argc != 3)
 	{
-    		printf("Unexpected number of arguments\n");
+    		fprintf(stdout, "Unexpected number of arguments\n");
     		exit(1);
 	}	
-	int n, i;
-	n = atoi(argv[1]);			// Прочитали число n, тогда у нас не больше n строк.
+	int n = atoi(argv[1]);			// Прочитали число n, тогда у нас не больше n строк.
 	FILE *f_in = fopen(argv[2], "r");                    //Открыли файл для чтения.
 	if (f_in == 0) 
 	{
-		printf("Error opening input file\n");
+		fprintf(stdout, "Error opening input file\n");
 		exit(1);
 	}                           
 	int *len_str = (int*)malloc(sizeof(int) * n);     // Объявили массив для длин строк.
+	int i;
 	for (i = 0; i != n; i++)
 	{
 		len_str[i] = 0;                           // Инициализировали его нулями.
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 		}
 	} while (c != EOF);
 	int j;
-	printf("Quantity of strings: %d\n", i);
+	fprintf(stdout, "Quantity of strings: %d\n", i);
 	char** a = (char**)malloc(sizeof(char*) * i);       // Выделили память для массива указателей на указатели.
 	rewind(f_in);                                       //Сдвинули каретку в начало файла.	
 	for(j = 0; j != i; j++)  
@@ -65,8 +65,12 @@ int main(int argc, char **argv)
 	fclose(f_in);
 	free(len_str);	
 	
-	printf("Choose a kind of sort:\nBubble sort -> 1\nInsertion sort -> 2\nQuick sort -> 3\nMerge sort -> 4\n  Your choose: ");
-	fscanf(stdin, "%d", &j);
+	fprintf(stdout, "Choose a kind of sort:\nBubble sort -> 1\nInsertion sort -> 2\nQuick sort -> 3\nMerge sort -> 4\n  Your choose: ");
+	if (!fscanf(stdin, "%d", &j))
+	{
+		fprintf(stdout, "Error reading.\n");
+		exit(1);
+	}		
 	switch(j)
 	{
 		case 1:
