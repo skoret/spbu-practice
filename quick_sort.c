@@ -1,8 +1,8 @@
 /* File c_quick_sort.c */
 
-#include "h_quick_sort.h"
-#include "h_swap.h"
-#include "h_comparator.h"
+#include "quick_sort.h"
+#include "swap.h"
+#include "comparator.h"
 
 void quick_sort(char** array, int n)
  {

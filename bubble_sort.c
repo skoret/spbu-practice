@@ -1,8 +1,8 @@
 /* File c_bubble_sort.c */
 
-#include "h_bubble_sort.h"
-#include "h_swap.h"
-#include "h_comparator.h"
+#include "bubble_sort.h"
+#include "swap.h"
+#include "comparator.h"
 
 void bubble_sort(char** array, int n)
  {

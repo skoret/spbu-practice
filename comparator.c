@@ -1,6 +1,6 @@
 /* File c_comparator.c */
 
-#include "h_comparator.h"
+#include "comparator.h"
 
 int comparator(char* a, char* b)
  {

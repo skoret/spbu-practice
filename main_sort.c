@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "h_swap.h"
-#include "h_comparator.h"
-#include "h_bubble_sort.h"
-#include "h_insertion_sort.h"
-#include "h_quick_sort.h"
-#include "h_merge_sort.h"
+#include "swap.h"
+#include "comparator.h"
+#include "bubble_sort.h"
+#include "insertion_sort.h"
+#include "quick_sort.h"
+#include "merge_sort.h"
 
 
 
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 				i++;
 			}
 		}
-	} while (c != EOF);
+	} while ((c != EOF) && (i != n));
 	int j;
 	fprintf(stdout, "Quantity of strings: %d\n", i);
 	char** a = (char**)malloc(sizeof(char*) * i);       // Выделили память для массива указателей на указатели.
@@ -92,9 +92,9 @@ int main(int argc, char **argv)
 	
 	for (j = 0; j != i; j++)
 	{
-	 fputs(a[j], stdout);
-	 fputc('\n',stdout);	 //Вывели отсортированный массив строк на экран.
-	 free(a[j]);
+		fputs(a[j], stdout);
+		fputc('\n',stdout);	 //Вывели отсортированный массив строк на экран.
+		free(a[j]);
 	}
 	free(a);
 	return 0;

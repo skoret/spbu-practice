@@ -1,9 +1,9 @@
 /* File c_merge_sort.c */
 
 #include <stdlib.h>
-#include "h_merge_sort.h"
-#include "h_swap.h"
-#include "h_comparator.h"
+#include "merge_sort.h"
+#include "swap.h"
+#include "comparator.h"
 
 void copy_array(char** a, int n, char** b)
  {

@@ -1,8 +1,8 @@
 /* File c_insertion.c */
 
-#include "h_insertion_sort.h"
-#include "h_swap.h"
-#include "h_comparator.h"
+#include "insertion_sort.h"
+#include "swap.h"
+#include "comparator.h"
 
 void insertion_sort(char** array, int n)
  {
