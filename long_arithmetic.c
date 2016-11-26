@@ -141,6 +141,7 @@ void diff(node_stack **head)
 			max->next->digit--;
 		}
 		digit_push_in_tail(&res->number, &res->tail, diffrence);
+		res->length++;
 		max = max->next;
 		min = min->next;
 	}
@@ -152,6 +153,7 @@ void diff(node_stack **head)
 			max->next->digit--;
 		}
 		digit_push_in_tail(&res->number, &res->tail, max->digit);
+		res->length++;
 		max = max->next;
 	}
 	while (!res->tail->digit && res->tail->prev)
