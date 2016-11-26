@@ -41,7 +41,7 @@ int main()
 			case '-':
 				if ((c = getchar()) != '\n')
 				{
-					read_number(&head_stack, c, '1');
+					number_read(&head_stack, c, '1');
 					break;
 				}
 				if (head_stack && head_stack->next)
@@ -61,10 +61,10 @@ int main()
 				break;
 			case '=':
 				printf("intermediate resul: ");
-				print_number(head_stack);
+				number_print(head_stack);
 				break;
 			case 'd':
-				delete_number(&head_stack);
+				number_delete(&head_stack);
 				break;
 			case 'c':
 				if (comparator_mod(head_stack) != -1)
@@ -80,14 +80,14 @@ int main()
 						printf("there aren't enough operands for final result.\n");
 						break;
 					}
-					print_number(head_stack);
-					delete_number(&head_stack);
+					number_print(head_stack);
+					number_delete(&head_stack);
 				}
 				return 1;
 			default:
 				if (c != '\n')
 				{
-					read_number(&head_stack, c, '0');
+					number_read(&head_stack, c, '0');
 					break;
 				}
 		}

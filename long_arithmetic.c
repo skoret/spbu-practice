@@ -79,27 +79,27 @@ void sum(node_stack **head)
 		mod = l->digit;
 		l->digit = (mod + div) % 10;
 		div = (mod + div) / 10;
-		push_digit_in_tail(&r, &(*head)->next->tail, l->digit);
+		digit_push_in_tail(&r, &(*head)->next->tail, l->digit);
 		(*head)->next->length++;
 		l = l->next;
 	}
 	if (div)
 	{
-		push_digit_in_tail(&r, &(*head)->next->tail, div);
+		digit_push_in_tail(&r, &(*head)->next->tail, div);
 	}
-	delete_number(head);
+	number_delete(head);
 }
 
 void diff(node_stack **head)
 {
 	if (comparator_mod(*head) == 2) //if a=b then (a-b)=0
 	{
-		delete_number(head); //del a
-		delete_number(head); //del b
+		number_delete(head); //del a
+		number_delete(head); //del b
 		node_stack *tmp = (node_stack*)malloc(sizeof(node_stack));
 		tmp->number = NULL;
 		tmp->tail = NULL;
-		push_digit_in_head(&(tmp->number), &(tmp->tail), 0);
+		digit_push_in_head(&(tmp->number), &(tmp->tail), 0);
 		tmp->length = 1;
 		tmp->sign = 0;
 		tmp->next = *head;
@@ -140,7 +140,7 @@ void diff(node_stack **head)
 			diffrence += 10;
 			max->next->digit--;
 		}
-		push_digit_in_tail(&res->number, &res->tail, diffrence);
+		digit_push_in_tail(&res->number, &res->tail, diffrence);
 		max = max->next;
 		min = min->next;
 	}
@@ -151,16 +151,16 @@ void diff(node_stack **head)
 			max->digit += 10;
 			max->next->digit--;
 		}
-		push_digit_in_tail(&res->number, &res->tail, max->digit);
+		digit_push_in_tail(&res->number, &res->tail, max->digit);
 		max = max->next;
 	}
 	while (!res->tail->digit && res->tail->prev)
 	{
-		delete_digit_from_tail(&res->tail);
+		digit_delete_from_tail(&res->tail);
 		res->length--;
 	}
-	delete_number(head);  
-	delete_number(head); //del min and max
+	number_delete(head);  
+	number_delete(head); //del min and max
 	res->next = *head;
 	*head = res;
 }

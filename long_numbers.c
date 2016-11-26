@@ -6,14 +6,14 @@
 
 
 
-void read_number(node_stack **head, char c, char sign)
+void number_read(node_stack **head, char c, char sign)
 {
 	node_stack *tmp = (node_stack*)malloc(sizeof(node_stack));
-	push_digit_in_head(&(tmp->number), &(tmp->tail), c - '0');
+	digit_push_in_head(&(tmp->number), &(tmp->tail), c - '0');
 	tmp->length = 1;
 	while ((c = getchar()) != '\n')
 	{
-		push_digit_in_head(&(tmp->number), &(tmp->tail), c - '0');
+		digit_push_in_head(&(tmp->number), &(tmp->tail), c - '0');
 		tmp->length++;
 	}
 	tmp->sign = sign - '0';
@@ -21,7 +21,7 @@ void read_number(node_stack **head, char c, char sign)
 	*head = tmp;
 }
 
-void print_number(node_stack *head)
+void number_print(node_stack *head)
 {
 	if (head && head->tail)
 	{
@@ -44,7 +44,7 @@ void print_number(node_stack *head)
 	}
 }
 
-void delete_number(node_stack **head)
+void number_delete(node_stack **head)
 {
 	if (!(*head))
 	{
@@ -66,7 +66,7 @@ void delete_number(node_stack **head)
 	op = NULL;
 }
 
-void push_digit_in_head(node_number **head, node_number **tail, char dig)
+void digit_push_in_head(node_number **head, node_number **tail, char dig)
 {
 	node_number *tmp = (node_number*)malloc(sizeof(node_number));
 	tmp->digit = dig;
@@ -83,7 +83,7 @@ void push_digit_in_head(node_number **head, node_number **tail, char dig)
 	*head = tmp;
 }
 
-void push_digit_in_tail(node_number **head, node_number **tail, char dig)
+void digit_push_in_tail(node_number **head, node_number **tail, char dig)
 {
 	node_number *tmp = (node_number*)malloc(sizeof(node_number));
 	tmp->digit = dig;
@@ -100,7 +100,7 @@ void push_digit_in_tail(node_number **head, node_number **tail, char dig)
 	*tail = tmp;
 }
 
-void delete_digit_from_head(node_number **head)
+void digit_delete_from_head(node_number **head)
 {
 	node_number *tmp = *head;
 	*head = (*head)->next;
@@ -111,7 +111,7 @@ void delete_digit_from_head(node_number **head)
 	free(tmp);
 }
 	
-void delete_digit_from_tail(node_number **tail)
+void digit_delete_from_tail(node_number **tail)
 {
 	node_number *tmp = *tail;
 	*tail = (*tail)->prev;
