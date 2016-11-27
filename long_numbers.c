@@ -4,11 +4,20 @@
 #include "long_numbers.h"
 #include "struct.h"
 
-
+node_stack* number_create()
+{
+	node_stack *tmp = (node_stack*)malloc(sizeof(node_stack));
+	tmp->number = NULL;
+	tmp->tail = NULL;
+	tmp->next = NULL;
+	tmp->sign = 0;
+	tmp->length = 0;
+	return tmp;
+}
 
 void number_read(node_stack **head, char c, char sign)
 {
-	node_stack *tmp = (node_stack*)malloc(sizeof(node_stack));
+	node_stack *tmp = number_create();
 	digit_push_in_head(&(tmp->number), &(tmp->tail), c - '0');
 	tmp->length = 1;
 	while ((c = getchar()) != '\n')
@@ -36,7 +45,6 @@ void number_print(node_stack *head)
 			tmp = tmp->prev;
 		}
 		printf("\n");
-		free(tmp);
 	}
 	else
 	{

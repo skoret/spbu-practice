@@ -2,6 +2,7 @@
 
 #include "struct.h"
 
+node_stack* number_create();
 void number_read(node_stack **head, char c, char sign);
 void number_print(node_stack *head);
 void number_delete(node_stack **head);
