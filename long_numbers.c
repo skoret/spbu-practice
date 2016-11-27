@@ -56,19 +56,14 @@ void number_delete(node_stack **head)
 {
 	if (!(*head))
 	{
-		printf("Nothing to delete.\n");
+		printf("nothing to delete.\n");
 		return;
 	}
-	node_number *del;
-	node_stack *op;
-	
 	while ((*head)->number)
 	{
-		del = (*head)->number;
-		(*head)->number = (*head)->number->next;
-		free(del);
+		digit_delete_from_head(&(*head)->number);
 	}
-	op = (*head);
+	node_stack *op = (*head);
 	*head = (*head)->next;
 	free(op);
 	op = NULL;
@@ -129,26 +124,3 @@ void digit_delete_from_tail(node_number **tail)
 	}
 	free(tmp);
 }
-
-
-	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
