@@ -35,6 +35,14 @@ int main()
 				}
 				break;
 			case '*':
+				if (head_stack && head_stack->next)
+				{
+					compos(&head_stack);
+				}
+				else
+				{
+					printf("there aren't enough numbers for this operation.\n");
+				}
 				break;
 			case '/':
 				break;

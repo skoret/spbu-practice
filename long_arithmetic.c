@@ -96,19 +96,16 @@ void diff(node_stack **head)
 	{
 		number_delete(head); //del a
 		number_delete(head); //del b
-		node_stack *tmp = (node_stack*)malloc(sizeof(node_stack));
-		tmp->number = NULL;
-		tmp->tail = NULL;
+		node_stack *tmp = number_create();
 		digit_push_in_head(&(tmp->number), &(tmp->tail), 0);
 		tmp->length = 1;
-		tmp->sign = 0;
 		tmp->next = *head;
 		*head = tmp;
 		return;
 	}
 	node_number *min;
 	node_number *max;
-	node_stack *res = (node_stack*)malloc(sizeof(node_stack));
+	node_stack *res = number_create();
 	if (comparator_mod(*head))
 	{
 		min = (*head)->number;
@@ -128,9 +125,6 @@ void diff(node_stack **head)
 			res->sign = ((*head)->sign + 1) % 2;
 		}
 	}
-	res->length = 0;
-	res->number = NULL;
-	res->tail = NULL;
 	char diffrence = 0;
 	while (max && min) 
 	{
@@ -166,6 +160,72 @@ void diff(node_stack **head)
 	res->next = *head;
 	*head = res;
 }
+
+void compos(node_stack **head)
+{
+	node_stack *res = number_create();
+	if (!(*head) || !(*head)) //if (a=0) or (b=0) then a*b=0
+	{
+		digit_push_in_head(&res->number, &res->tail, 0);
+		res->sign = 0;
+		number_delete(head);
+		number_delete(head);
+		res->next = *head;
+		*head = res;
+		return;
+	}
+	res->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;	
+	digit_push_in_head(&res->number, &res->tail, 0);
+	char mod = 0;
+	char div = 0;
+	int rank = 1;
+	node_number *l = (*head)->number;
+	node_number *r = (*head)->next->number;
+	while (l)
+	{
+		node_stack *tmp = number_create();
+		tmp->next = res;
+		while (r)
+		{
+			mod = ((l->digit * r->digit) + div) % 10;
+			div = ((l->digit * r->digit) + div) / 10;
+			digit_push_in_tail(&tmp->number, &tmp->tail, mod);
+			r = r->next;
+		}
+		digit_push_in_tail(&tmp->number, &tmp->tail, div);
+		div = 0;
+		int i = 1;
+		while (i++ < rank) //tmp rank shift
+		{
+			digit_push_in_head(&tmp->number, &tmp->tail, 0);
+		}
+		rank++;
+		sum(&tmp);		
+		r = (*head)->next->number;
+		l = l->next;
+	}
+	digit_push_in_tail(&res->number, &res->tail, div);
+	while (!res->tail->digit && res->tail->prev)
+	{
+		digit_delete_from_tail(&res->tail);
+		res->length--;
+	}
+	number_delete(head);
+	number_delete(head);
+	res->next = *head;
+	*head = res;
+	return;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
