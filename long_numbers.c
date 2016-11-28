@@ -52,6 +52,20 @@ void number_print(node_stack *head)
 	}
 }
 
+node_stack* number_copy(node_stack *head)
+{
+	node_stack *tmp = number_create();
+	tmp->sign = head->sign;
+	tmp->length = head->length;
+	node_number *num = head->number;
+	while (num)
+	{
+		digit_push_in_tail(&tmp->number, &tmp->tail, num->digit);
+		num = num->next;
+	}
+	return tmp;
+}
+
 void number_delete(node_stack **head)
 {
 	if (!(*head))
