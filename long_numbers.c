@@ -18,12 +18,11 @@ node_stack* number_create()
 void number_read(node_stack **head, char c, char sign)
 {
 	node_stack *tmp = number_create();
-	digit_push_in_head(&(tmp->number), &(tmp->tail), c - '0');
+	digit_push_in_head(tmp, c - '0');
 	tmp->length = 1;
 	while ((c = getchar()) != '\n')
 	{
-		digit_push_in_head(&(tmp->number), &(tmp->tail), c - '0');
-		tmp->length++;
+		digit_push_in_head(tmp, c - '0');
 	}
 	tmp->sign = sign - '0';
 	tmp->next = *head;
@@ -56,11 +55,10 @@ node_stack* number_copy(node_stack *head)
 {
 	node_stack *tmp = number_create();
 	tmp->sign = head->sign;
-	tmp->length = head->length;
 	node_number *num = head->number;
 	while (num)
 	{
-		digit_push_in_tail(&tmp->number, &tmp->tail, num->digit);
+		digit_push_in_tail(tmp, num->digit);
 		num = num->next;
 	}
 	return tmp;
@@ -75,7 +73,7 @@ void number_delete(node_stack **head)
 	}
 	while ((*head)->number)
 	{
-		digit_delete_from_head(&(*head)->number);
+		digit_delete_from_head(*head);
 	}
 	node_stack *op = (*head);
 	*head = (*head)->next;
@@ -83,58 +81,60 @@ void number_delete(node_stack **head)
 	op = NULL;
 }
 
-void digit_push_in_head(node_number **head, node_number **tail, char dig)
+void digit_push_in_head(node_stack *head, char dig)
 {
 	node_number *tmp = (node_number*)malloc(sizeof(node_number));
 	tmp->digit = dig;
 	tmp->prev = NULL;
-	tmp->next = *head;
-	if (*head)
+	tmp->next = head->number;
+	if (head->number)
 	{
-		(*head)->prev = tmp;
+		head->number->prev = tmp;
 	}
 	else
 	{
-		*tail = tmp;
+		head->tail = tmp;
 	}
-	*head = tmp;
+	head->number = tmp;
+	head->length++;
 }
 
-void digit_push_in_tail(node_number **head, node_number **tail, char dig)
+void digit_push_in_tail(node_stack *head, char dig)
 {
 	node_number *tmp = (node_number*)malloc(sizeof(node_number));
 	tmp->digit = dig;
 	tmp->next = NULL;
-	tmp->prev = *tail;
-	if (*tail)
+	tmp->prev = head->tail;
+	if (head->tail)
 	{
-		(*tail)->next = tmp;
+		head->tail->next = tmp;
 	}
 	else
 	{
-		*head = tmp;
+		head->number = tmp;
 	}
-	*tail = tmp;
+	head->tail = tmp;
+	head->length++;	
 }
 
-void digit_delete_from_head(node_number **head)
+void digit_delete_from_head(node_stack *head)
 {
-	node_number *tmp = *head;
-	*head = (*head)->next;
-	if (*head)
+	node_number *tmp = head->number;
+	head->number = head->number->next;
+	if (head->number)
 	{
-		(*head)->prev = NULL;
+		head->number->prev = NULL;
 	}
 	free(tmp);
 }
 	
-void digit_delete_from_tail(node_number **tail)
+void digit_delete_from_tail(node_stack *head)
 {
-	node_number *tmp = *tail;
-	*tail = (*tail)->prev;
-	if (*tail)
+	node_number *tmp = head->tail;
+	head->tail = head->tail->prev;
+	if (head->tail)
 	{
-		(*tail)->next = NULL;
+		head->tail->next = NULL;
 	}
 	free(tmp);
 }

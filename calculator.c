@@ -69,8 +69,13 @@ int main()
 						printf("there aren't enough operands for final result.\n");
 						break;
 					}
+					printf("your result: ");
 					number_print(head_stack);
 					number_delete(&head_stack);
+				}
+				else
+				{
+					printf("no result.\n");
 				}
 				return 1;
 			default:

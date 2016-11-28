@@ -84,14 +84,12 @@ void sum(node_stack **head)
 		mod = l->digit;
 		l->digit = (mod + div) % 10;
 		div = (mod + div) / 10;
-		digit_push_in_tail(&r, &(*head)->next->tail, l->digit);
-		(*head)->next->length++;
+		digit_push_in_tail((*head)->next, l->digit);
 		l = l->next;
 	}
 	if (div)
 	{
-		digit_push_in_tail(&r, &(*head)->next->tail, div);
-		(*head)->next->length++;
+		digit_push_in_tail((*head)->next, div);
 	}
 	number_delete(head);
 }
@@ -108,8 +106,7 @@ void diff(node_stack **head)
 		number_delete(head); //del a
 		number_delete(head); //del b
 		node_stack *tmp = number_create();
-		digit_push_in_head(&(tmp->number), &(tmp->tail), 0);
-		tmp->length = 1;
+		digit_push_in_head(tmp, 0);
 		tmp->next = *head;
 		*head = tmp;
 		return;
@@ -145,8 +142,7 @@ void diff(node_stack **head)
 			diffrence += 10;
 			max->next->digit--;
 		}
-		digit_push_in_tail(&res->number, &res->tail, diffrence);
-		res->length++;
+		digit_push_in_tail(res, diffrence);
 		max = max->next;
 		min = min->next;
 	}
@@ -157,14 +153,12 @@ void diff(node_stack **head)
 			max->digit += 10;
 			max->next->digit--;
 		}
-		digit_push_in_tail(&res->number, &res->tail, max->digit);
-		res->length++;
+		digit_push_in_tail(res, max->digit);
 		max = max->next;
 	}
 	while (!res->tail->digit && res->tail->prev)
 	{
-		digit_delete_from_tail(&res->tail);
-		res->length--;
+		digit_delete_from_tail(res);
 	}
 	number_delete(head);  
 	number_delete(head); //del min and max
@@ -182,8 +176,7 @@ void compos(node_stack **head)
 	node_stack *res = number_create();
 	if (!(*head)->tail->digit || !(*head)->next->tail->digit) //if (a=0) or (b=0) then a*b=0
 	{
-		digit_push_in_head(&res->number, &res->tail, 0);
-		res->length = 1;
+		digit_push_in_head(res, 0);
 		res->sign = 0;
 		number_delete(head);
 		number_delete(head);
@@ -192,8 +185,7 @@ void compos(node_stack **head)
 		return;
 	}
 	res->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;	
-	digit_push_in_head(&res->number, &res->tail, 0);
-	res->length++;
+	digit_push_in_head(res, 0);
 	char mod = 0;
 	char div = 0;
 	int rank = 1;
@@ -207,29 +199,25 @@ void compos(node_stack **head)
 		{
 			mod = ((l->digit * r->digit) + div) % 10;
 			div = ((l->digit * r->digit) + div) / 10;
-			digit_push_in_tail(&tmp->number, &tmp->tail, mod);
-			tmp->length++;
+			digit_push_in_tail(tmp, mod);
 			r = r->next;
 		}
-		digit_push_in_tail(&tmp->number, &tmp->tail, div);
+		digit_push_in_tail(tmp, div);
 		div = 0;
 		int i = 1;
 		while (i++ < rank) //tmp rank shift
 		{
-			digit_push_in_head(&tmp->number, &tmp->tail, 0);
-			tmp->length++;
+			digit_push_in_head(tmp, 0);
 		}
 		rank++;
 		sum(&tmp);		
 		r = (*head)->next->number;
 		l = l->next;
 	}
-	digit_push_in_tail(&res->number, &res->tail, div);
-	res->length++;
+	digit_push_in_tail(res, div);
 	while (!res->tail->digit && res->tail->prev)
 	{
-		digit_delete_from_tail(&res->tail);
-		res->length--;
+		digit_delete_from_tail(res);
 	}
 	number_delete(head);
 	number_delete(head);
@@ -251,8 +239,7 @@ void quotient(node_stack **head)
 	{
 		number_delete(head);
 		number_delete(head);
-		digit_push_in_head(&res->number, &res->tail, 1);
-		res->length++;
+		digit_push_in_head(res, 1);
 		res->next = (*head);
 		(*head) = res;
 		return;
@@ -278,8 +265,7 @@ void quotient(node_stack **head)
 	}
 	while (quot)
 	{
-		digit_push_in_tail(&res->number, &res->tail, (quot % 10));
-		res->length++;
+		digit_push_in_tail(res, (quot % 10));
 		quot = quot / 10;
 	}
 	number_delete(&denominator);
