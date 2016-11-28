@@ -237,3 +237,55 @@ void compos(node_stack **head)
 	*head = res;
 	return;
 }
+
+void quotient(node_stack **head)
+{
+	if (!(*head) || !(*head)->next)
+	{
+		printf("there aren't enough numbers for this operation.\n");
+		return;
+	}
+	node_stack *res = number_create();
+	res->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;
+	if (comparator_mod(*head) == 2) // if (a=b) then a/b = +-1
+	{
+		number_delete(head);
+		number_delete(head);
+		digit_push_in_head(&res->number, &res->tail, 1);
+		res->length++;
+		res->next = (*head);
+		(*head) = res;
+		return;
+	}
+	if (!comparator_mod(*head)) // if (a<b) then a/b = a in Z
+	{
+		number_delete(head);
+		return;
+	}
+	//if a>b then a/b=res
+	int quot = 0;
+	(*head)->sign = 0;
+	(*head)->next->sign = 0;
+	node_stack *denominator = number_copy(*head);
+	while (comparator_mod(*head))
+	{
+		diff(head);
+		quot++;
+		denominator->next = *head;
+		*head = number_copy(denominator);
+		(*head)->next = denominator->next;
+		
+	}
+	while (quot)
+	{
+		digit_push_in_tail(&res->number, &res->tail, (quot % 10));
+		res->length++;
+		quot = quot / 10;
+	}
+	number_delete(&denominator);
+	number_delete(head);
+	number_delete(head);
+	res->next = (*head);
+	*head = res;
+	return;
+}

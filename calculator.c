@@ -31,6 +31,7 @@ int main()
 				compos(&head_stack);
 				break;
 			case '/':
+				quotient(&head_stack);
 				break;
 			case '-':
 				if ((c = getchar()) != '\n')
