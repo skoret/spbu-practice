@@ -244,9 +244,13 @@ void quotient(node_stack **head)
 		(*head) = res;
 		return;
 	}
-	if (!comparator_mod(*head)) // if (a<b) then a/b = a in Z
+	if (!comparator_mod(*head)) // if (a<b) then a/b = 0 in Z
 	{
 		number_delete(head);
+		number_delete(head);
+		digit_push_in_head(res, 0);
+		res->next = *head;
+		*head = res;
 		return;
 	}
 	//if a>b then a/b=res
@@ -254,21 +258,40 @@ void quotient(node_stack **head)
 	(*head)->sign = 0;
 	(*head)->next->sign = 0;
 	node_stack *denominator = number_copy(*head);
-	while (comparator_mod(*head))
+	node_stack *dividend = number_create();
+	denominator->next = dividend;
+	while ((*head)->next->tail)
 	{
-		diff(head);
-		quot++;
-		denominator->next = *head;
-		*head = number_copy(denominator);
-		(*head)->next = denominator->next;
-		
+		do
+		{
+			if (dividend->tail && !dividend->tail->digit)
+			{
+				digit_delete_from_tail(dividend);
+			}
+			digit_push_in_head(dividend, (*head)->next->tail->digit);
+			digit_delete_from_tail((*head)->next);
+			if (!comparator_mod(denominator))
+			{
+				digit_push_in_head(res, 0);
+			}
+		} while (!comparator_mod(denominator) && (*head)->next);
+		while (comparator_mod(denominator))
+		{
+			diff(&denominator);
+			quot++;
+			dividend = denominator;
+			denominator = number_copy(*head);
+			denominator->next = dividend;
+		}
+		digit_push_in_head(res, quot);
+		quot = 0;
 	}
-	while (quot)
+	while (!res->tail->digit && res->tail->prev)
 	{
-		digit_push_in_tail(res, (quot % 10));
-		quot = quot / 10;
-	}
+		digit_delete_from_tail(res);
+	}	
 	number_delete(&denominator);
+	number_delete(&dividend);
 	number_delete(head);
 	number_delete(head);
 	res->next = (*head);
