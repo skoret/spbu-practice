@@ -274,7 +274,7 @@ void quotient(node_stack **head)
 			{
 				digit_push_in_head(res, 0);
 			}
-		} while (!comparator_mod(denominator) && (*head)->next);
+		} while (!comparator_mod(denominator) && (*head)->next->tail);
 		while (comparator_mod(denominator))
 		{
 			diff(&denominator);
