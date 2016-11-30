@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 			quick_sort(string, quantity_strings-1);
 			break;
 	}
-	print_strings(string, quantity_strings, buff.st_size);
+	//print_strings(string, quantity_strings, buff.st_size);
 	fprintf(stdout, "End of sort.\n");
 	free(string);
 	return 0;
