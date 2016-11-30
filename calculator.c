@@ -11,10 +11,9 @@
 int main()
 {
 	node_stack *head_stack = NULL;
-	char c;
 	while (1)
 	{
-		c = getchar();
+		char c = getchar();
 		switch (c)
 		{
 			case '+':

@@ -9,7 +9,7 @@ int comparator_mod(node_stack *head)
 {
 	if (!head || !head->next)
 	{
-		printf("Nothing to compare.\n");
+		printf("nothing to compare.\n");
 		return -1;
 	}
 	if (head->length > head->next->length)
@@ -60,7 +60,7 @@ void sum(node_stack **head)
 		r->digit = (mod + l->digit + div) % 10;
 		div = (mod + l->digit + div) / 10;
 		(*head)->next->length++;
-		if (r->next == NULL)
+		if (!r->next)
 		{
 			(*head)->next->tail = r;
 		}
@@ -73,7 +73,7 @@ void sum(node_stack **head)
 		r->digit = (mod + div) % 10;
 		div = (mod + div) / 10;
 		(*head)->next->length++;
-		if (r->next == NULL)
+		if (!r->next)
 		{
 			(*head)->next->tail = r;
 		}
@@ -111,8 +111,8 @@ void diff(node_stack **head)
 		*head = tmp;
 		return;
 	}
-	node_number *min;
-	node_number *max;
+	node_number *min = NULL;
+	node_number *max = NULL;
 	node_stack *res = number_create();
 	if (comparator_mod(*head))
 	{
@@ -189,11 +189,13 @@ void compos(node_stack **head)
 	char mod = 0;
 	char div = 0;
 	int rank = 1;
+	int i = 1;
+	node_stack *tmp = NULL;
 	node_number *l = (*head)->number;
 	node_number *r = (*head)->next->number;
 	while (l)
 	{
-		node_stack *tmp = number_create();
+		tmp = number_create();
 		tmp->next = res;
 		while (r)
 		{
@@ -204,11 +206,11 @@ void compos(node_stack **head)
 		}
 		digit_push_in_tail(tmp, div);
 		div = 0;
-		int i = 1;
 		while (i++ < rank) //tmp rank shift
 		{
 			digit_push_in_head(tmp, 0);
 		}
+		i = 1;
 		rank++;
 		sum(&tmp);		
 		r = (*head)->next->number;
@@ -235,7 +237,8 @@ void quotient(node_stack **head)
 	}
 	node_stack *res = number_create();
 	res->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;
-	if (comparator_mod(*head) == 2) // if (a=b) then a/b = +-1
+	// if (a=b) then a/b = +-1
+	if (comparator_mod(*head) == 2)
 	{
 		number_delete(head);
 		number_delete(head);
@@ -244,7 +247,8 @@ void quotient(node_stack **head)
 		(*head) = res;
 		return;
 	}
-	if (!comparator_mod(*head)) // if (a<b) then a/b = 0 in Z
+	// if (a<b) then a/b = 0 in Z
+	if (!comparator_mod(*head))
 	{
 		number_delete(head);
 		number_delete(head);
