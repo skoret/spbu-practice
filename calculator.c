@@ -17,13 +17,20 @@ int main()
 		switch (c)
 		{
 			case '+':
-				if (head_stack->sign == head_stack->next->sign)
+				if (head_stack && head_stack->next)
 				{
-					sum(&head_stack);  // (a,b>0) -> sum(a,b)>0 
-				}			  // or (a,b<0) -> sum(a,b)<0
+					if (head_stack->sign == head_stack->next->sign)
+					{
+						sum(&head_stack);  // (a,b>0) -> sum(a,b)>0 
+					}			  // or (a,b<0) -> sum(a,b)<0
+					else
+					{
+						diff(&head_stack); // sign res(a-b) = sign max_mod(a,b)
+					}
+				}
 				else
 				{
-					diff(&head_stack); // sign res(a-b) = sign max_mod(a,b)
+					printf("there aren't enough numbers for this operation.\n");
 				}
 				break;
 			case '*':
@@ -38,17 +45,24 @@ int main()
 					number_read(&head_stack, c, '1');
 					break;
 				}
-				if (head_stack->sign != head_stack->next->sign)
+				if (head_stack && head_stack->next)
 				{
-					sum(&head_stack);  // (a>0, b>0) -> a-(-b)=a+b>0 like a
-				}			  // (a>0, b>0) -> -a-b=-(a+b)<0 like -a
+					if (head_stack->sign != head_stack->next->sign)
+					{
+						sum(&head_stack);  // (a>0, b>0) -> a-(-b)=a+b>0 like a
+					}			  // (a>0, b>0) -> -a-b=-(a+b)<0 like -a
+					else
+					{
+						diff(&head_stack);
+					}
+				}
 				else
 				{
-					diff(&head_stack);
+					printf("there aren't enough numbers for this operation.\n");
 				}
 				break;
 			case '=':
-				printf("intermediate resul: ");
+				printf("intermediate resul:\n");
 				number_print(head_stack);
 				break;
 			case 'd':

@@ -44,11 +44,6 @@ int comparator_mod(node_stack *head)
 
 void sum(node_stack **head)
 {
-	if (!(*head) || !(*head)->next)
-	{
-		printf("there aren't enough numbers for this operation.\n");
-		return;
-	}
 	char mod = 0;
 	char div = 0;
 	node_number *l = (*head)->number;
@@ -96,11 +91,6 @@ void sum(node_stack **head)
 
 void diff(node_stack **head)
 {
-	if (!(*head) || !(*head)->next)
-	{
-		printf("there aren't enough numbers for this operation.\n");
-		return;
-	}
 	if (comparator_mod(*head) == 2) //if a=b then (a-b)=0
 	{
 		number_delete(head); //del a
