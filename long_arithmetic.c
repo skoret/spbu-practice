@@ -270,7 +270,7 @@ void quotient(node_stack **head)
 			}
 			digit_push_in_head(dividend, (*head)->next->tail->digit);
 			digit_delete_from_tail((*head)->next);
-			if (!comparator_mod(denominator))
+			if (!comparator_mod(denominator) && (*head)->next->tail)
 			{
 				digit_push_in_head(res, 0);
 			}
