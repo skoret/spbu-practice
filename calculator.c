@@ -11,6 +11,7 @@
 int main()
 {
 	node_stack *head_stack = NULL;
+	int x = 0;
 	while (1)
 	{
 		char c = getchar();
@@ -60,6 +61,24 @@ int main()
 				{
 					printf("there aren't enough numbers for this operation.\n");
 				}
+				break;
+			case '^':
+				scanf("%d", &x);
+				if (!x)
+				{
+					number_delete(&head_stack);
+					number_read(&head_stack, '1', '0');
+					break;
+				}
+				node_stack *tmp_base = number_copy(head_stack);
+				while (x-- > 1)
+				{
+					node_stack *tmp = number_copy(tmp_base);
+					tmp->next = head_stack;
+					head_stack = tmp;
+					compos(&head_stack);
+				}
+				number_delete(&tmp_base);
 				break;
 			case '=':
 				printf("intermediate resul:\n");
