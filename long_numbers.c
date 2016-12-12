@@ -46,7 +46,7 @@ void number_print(node_stack *head)
 	}
 	else
 	{
-		printf("------\n");
+		printf("------|empty stack\n");
 	}
 }
 
@@ -67,7 +67,7 @@ void number_delete(node_stack **head)
 {
 	if (!(*head))
 	{
-		printf("nothing to delete.\n");
+		printf("nothing to delete|empty stack.\n");
 		return;
 	}
 	while ((*head)->number)

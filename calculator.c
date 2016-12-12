@@ -11,7 +11,6 @@
 int main()
 {
 	node_stack *head_stack = NULL;
-	int x = 0;
 	while (1)
 	{
 		char c = getchar();
@@ -31,7 +30,7 @@ int main()
 				}
 				else
 				{
-					printf("there aren't enough numbers for this operation.\n");
+					printf("there aren't enough numbers for this operation|empty stack.\n");
 				}
 				break;
 			case '*':
@@ -59,27 +58,35 @@ int main()
 				}
 				else
 				{
-					printf("there aren't enough numbers for this operation.\n");
+					printf("there aren't enough numbers for this operation|empty stack.\n");
 				}
 				break;
 			case '^':
-				scanf("%d", &x);
-				if (!x)
 				{
-					number_delete(&head_stack);
-					number_read(&head_stack, '1', '0');
+					int x = 0;
+					scanf("%d", &x);
+					if (!head_stack)
+					{
+						printf("there aren't enough numbers for this operation|empty stack.\n");
+						break;
+					}
+					if (!x)
+					{
+						number_delete(&head_stack);
+						number_read(&head_stack, '1', '0');
+						break;
+					}
+					node_stack *tmp_base = number_copy(head_stack);
+					while (x-- > 1)
+					{
+						node_stack *tmp = number_copy(tmp_base);
+						tmp->next = head_stack;
+						head_stack = tmp;
+						compos(&head_stack);
+					}
+					number_delete(&tmp_base);
 					break;
 				}
-				node_stack *tmp_base = number_copy(head_stack);
-				while (x-- > 1)
-				{
-					node_stack *tmp = number_copy(tmp_base);
-					tmp->next = head_stack;
-					head_stack = tmp;
-					compos(&head_stack);
-				}
-				number_delete(&tmp_base);
-				break;
 			case '=':
 				printf("intermediate resul:\n");
 				number_print(head_stack);
@@ -107,7 +114,7 @@ int main()
 				}
 				else
 				{
-					printf("no result.\n");
+					printf("no result|empty stack.\n");
 				}
 				return 1;
 			default:

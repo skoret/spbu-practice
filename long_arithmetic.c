@@ -9,7 +9,7 @@ int comparator_mod(node_stack *head)
 {
 	if (!head || !head->next)
 	{
-		printf("nothing to compare.\n");
+		printf("nothing to compare|empty stack.\n");
 		return -1;
 	}
 	if (head->length > head->next->length)
@@ -160,7 +160,7 @@ void compos(node_stack **head)
 {
 	if (!(*head) || !(*head)->next)
 	{
-		printf("there aren't enough numbers for this operation.\n");
+		printf("there aren't enough numbers for this operation|empty stack.\n");
 		return;
 	}
 	node_stack *res = number_create();
@@ -222,7 +222,7 @@ void quotient(node_stack **head)
 {
 	if (!(*head) || !(*head)->next)
 	{
-		printf("there aren't enough numbers for this operation.\n");
+		printf("there aren't enough numbers for this operation|empty stack.\n");
 		return;
 	}
 	node_stack *res = number_create();
