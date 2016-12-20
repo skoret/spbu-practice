@@ -42,7 +42,7 @@ void number_print(node_stack *head)
 			printf("%d", tmp->digit);
 			tmp = tmp->prev;
 		}
-		printf("\n");
+		printf("\n //number_length: %ld\n", head->length);
 	}
 	else
 	{
@@ -132,7 +132,7 @@ void digit_delete_from_head(node_stack *head)
 	tmp = NULL;
 	head->length--;
 }
-	
+
 void digit_delete_from_tail(node_stack *head)
 {
 	node_number *tmp = head->tail;

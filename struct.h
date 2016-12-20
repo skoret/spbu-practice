@@ -10,7 +10,7 @@ typedef struct node_number
 typedef struct node_stack
 {
 	char sign;
-	int length;
+	long length;
 	struct node_number *number;
 	struct node_number *tail;
 	struct node_stack *next;
