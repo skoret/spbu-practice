@@ -229,6 +229,19 @@ void quotient(node_stack **head)
 		printf("there aren't enough numbers for this operation|empty stack.\n");
 		return;
 	}
+	//if  (b=0) then a/b -- error
+	if (!(*head)->tail->digit)
+	{
+		printf("impossible operation.\n");
+		return;
+	}
+	//if b=1 then a/b=a
+	if (((*head)->tail->digit == 1) && ((*head)->length == 1))
+	{
+		(*head)->next->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;
+		number_delete(head);
+		return;
+	}
 	node_stack *res = number_create();
 	res->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;
 	// if (a=b) then a/b = +-1
@@ -287,7 +300,7 @@ void quotient(node_stack **head)
 	while (!res->tail->digit && res->tail->prev)
 	{
 		digit_delete_from_tail(res);
-	}	
+	}
 	number_delete(&denominator);
 	number_delete(&dividend);
 	number_delete(head);
