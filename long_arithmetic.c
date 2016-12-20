@@ -45,7 +45,7 @@ int comparator_mod(node_stack *head)
 void sum(node_stack **head)
 {
 	node_stack *res = number_create();
-	res->sign = (*head)->sign;
+	res->sign = (*head)->next->sign;
 	node_stack *l = (*head);
 	node_stack *r = (*head)->next;
 	char div = 0;
