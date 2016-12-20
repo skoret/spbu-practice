@@ -11,7 +11,7 @@
 int main()
 {
 	node_stack *head_stack = NULL;
-	while (1)
+	for(;;)
 	{
 		char c = getchar();
 		switch (c)
@@ -21,7 +21,7 @@ int main()
 				{
 					if (head_stack->sign == head_stack->next->sign)
 					{
-						sum(&head_stack);  // (a,b>0) -> sum(a,b)>0 
+						sum(&head_stack);  // (a,b>0) -> sum(a,b)>0
 					}			  // or (a,b<0) -> sum(a,b)<0
 					else
 					{
@@ -108,7 +108,7 @@ int main()
 						printf("there aren't enough operands for final result.\n");
 						break;
 					}
-					printf("your result: ");
+					printf("your result:\n");
 					number_print(head_stack);
 					number_delete(&head_stack);
 				}
@@ -118,6 +118,14 @@ int main()
 				}
 				return 1;
 			default:
+				if (c == EOF)
+				{
+					while(head_stack)
+					{
+						number_delete(&head_stack);
+					}
+					return 1;
+				}
 				if (c != '\n')
 				{
 					number_read(&head_stack, c, '0');
