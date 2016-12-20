@@ -153,6 +153,7 @@ void compos(node_stack **head)
 		return;
 	}
 	node_stack *res = number_create();
+	res->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;
 	if (!(*head)->tail->digit || !(*head)->next->tail->digit) //if (a=0) or (b=0) then a*b=0
 	{
 		digit_push_in_head(res, 0);
@@ -163,39 +164,53 @@ void compos(node_stack **head)
 		*head = res;
 		return;
 	}
-	res->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;	
-	digit_push_in_head(res, 0);
-	char mod = 0;
-	char div = 0;
-	int rank = 1;
-	int i = 1;
-	node_stack *tmp = NULL;
+	//if (a=1) or (b=1) then a*b=(a)or(b)
+	if (((*head)->tail->digit == 1) && ((*head)->length == 1))
+	{
+		(*head)->next->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;
+		number_delete(head);
+		return;
+	}
+	if (((*head)->next->tail->digit == 1) && ((*head)->next->length == 1))
+	{
+		(*head)->sign = ((*head)->sign == (*head)->next->sign) ? 0 : 1;
+		number_delete(&(*head)->next);
+		return;
+	}
 	node_number *l = (*head)->number;
 	node_number *r = (*head)->next->number;
+	long i = (*head)->length + (*head)->next->length;
+	while (i--)
+	{
+		digit_push_in_head(res, 0); // res = 0
+	}
+	char mod = 0;
+	char div = 0;
+	node_number *tmp_start = res->number;
+	node_number *tmp = res->number;
 	while (l)
 	{
-		tmp = number_create();
-		tmp->next = res;
 		while (r)
 		{
-			mod = ((l->digit * r->digit) + div) % 10;
-			div = ((l->digit * r->digit) + div) / 10;
-			digit_push_in_tail(tmp, mod);
+			mod = tmp->digit;
+			tmp->digit = ((l->digit * r->digit) + div + mod) % 10;
+			div = ((l->digit * r->digit) + div + mod) / 10;
 			r = r->next;
+			tmp = tmp->next;
 		}
-		digit_push_in_tail(tmp, div);
-		div = 0;
-		while (i++ < rank) //tmp rank shift
+		while(div)
 		{
-			digit_push_in_head(tmp, 0);
+			mod = tmp->digit;
+			tmp->digit = (div + mod) % 10;
+			div = (div + mod) / 10;
+			tmp = tmp->next;
 		}
-		i = 1;
-		rank++;
-		sum(&tmp);		
 		r = (*head)->next->number;
+		tmp_start = tmp_start->next;
+		tmp = tmp_start;
 		l = l->next;
+		digit_delete_from_head(*head);
 	}
-	digit_push_in_tail(res, div);
 	while (!res->tail->digit && res->tail->prev)
 	{
 		digit_delete_from_tail(res);
