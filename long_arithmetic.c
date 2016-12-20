@@ -44,49 +44,38 @@ int comparator_mod(node_stack *head)
 
 void sum(node_stack **head)
 {
-	char mod = 0;
+	node_stack *res = number_create();
+	res->sign = (*head)->sign;
+	node_stack *l = (*head);
+	node_stack *r = (*head)->next;
 	char div = 0;
-	node_number *l = (*head)->number;
-	node_number *r = (*head)->next->number;
-	(*head)->next->length = 0;
-	while (l && r)
+	while (l->number && r->number)
 	{
-		mod = r->digit;
-		r->digit = (mod + l->digit + div) % 10;
-		div = (mod + l->digit + div) / 10;
-		(*head)->next->length++;
-		if (!r->next)
-		{
-			(*head)->next->tail = r;
-		}
-		l = l->next;
-		r = r->next;
+		digit_push_in_tail(res, ((r->number->digit + l->number->digit + div) % 10));
+		div = (r->number->digit + l->number->digit + div) / 10;
+		digit_delete_from_head(l);
+		digit_delete_from_head(r);
 	}
-	while (r)
+	while (l->number)
 	{
-		mod = r->digit;
-		r->digit = (mod + div) % 10;
-		div = (mod + div) / 10;
-		(*head)->next->length++;
-		if (!r->next)
-		{
-			(*head)->next->tail = r;
-		}
-		r = r->next;
+		digit_push_in_tail(res, ((l->number->digit + div) % 10));
+		div = (l->number->digit + div) / 10;
+		digit_delete_from_head(l);
 	}
-	while (l)
+	while (r->number)
 	{
-		mod = l->digit;
-		l->digit = (mod + div) % 10;
-		div = (mod + div) / 10;
-		digit_push_in_tail((*head)->next, l->digit);
-		l = l->next;
+		digit_push_in_tail(res, ((r->number->digit + div) % 10));
+		div = (r->number->digit + div) / 10;
+		digit_delete_from_head(r);
 	}
 	if (div)
 	{
-		digit_push_in_tail((*head)->next, div);
+		digit_push_in_tail(res, div);
 	}
 	number_delete(head);
+	number_delete(head);
+	res->next = *head;
+	*head = res;
 }
 
 void diff(node_stack **head)
@@ -124,7 +113,7 @@ void diff(node_stack **head)
 		}
 	}
 	char diffrence = 0;
-	while (max && min) 
+	while (max && min)
 	{
 		diffrence = max->digit - min->digit;
 		if (diffrence < 0)
@@ -150,7 +139,7 @@ void diff(node_stack **head)
 	{
 		digit_delete_from_tail(res);
 	}
-	number_delete(head);  
+	number_delete(head);
 	number_delete(head); //del min and max
 	res->next = *head;
 	*head = res;
