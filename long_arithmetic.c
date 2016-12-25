@@ -90,19 +90,19 @@ void diff(node_stack **head)
 		*head = tmp;
 		return;
 	}
-	node_number *min = NULL;
-	node_number *max = NULL;
+	node_stack *min = NULL;
+	node_stack *max = NULL;
 	node_stack *res = number_create();
 	if (comparator_mod(*head))
 	{
-		min = (*head)->number;
-		max = (*head)->next->number;
+		min = (*head);
+		max = (*head)->next;
 		res->sign = (*head)->next->sign;
 	}
 	else
 	{
-		min = (*head)->next->number;
-		max = (*head)->number;
+		min = (*head)->next;
+		max = (*head);
 		if ((*head)->sign != (*head)->next->sign)
 		{
 			res->sign = (*head)->sign;
@@ -113,27 +113,27 @@ void diff(node_stack **head)
 		}
 	}
 	char diffrence = 0;
-	while (max && min)
+	while (max->number && min->number)
 	{
-		diffrence = max->digit - min->digit;
+		diffrence = max->number->digit - min->number->digit;
 		if (diffrence < 0)
 		{
 			diffrence += 10;
-			max->next->digit--;
+			max->number->next->digit--;
 		}
 		digit_push_in_tail(res, diffrence);
-		max = max->next;
-		min = min->next;
+		digit_delete_from_head(max);
+		digit_delete_from_head(min);
 	}
-	while (max)
+	while (max->number)
 	{
-		while (max->digit < 0)
+		while (max->number->digit < 0)
 		{
-			max->digit += 10;
-			max->next->digit--;
+			max->number->digit += 10;
+			max->number->next->digit--;
 		}
-		digit_push_in_tail(res, max->digit);
-		max = max->next;
+		digit_push_in_tail(res, max->number->digit);
+		digit_delete_from_head(max);
 	}
 	while (!res->tail->digit && res->tail->prev)
 	{
