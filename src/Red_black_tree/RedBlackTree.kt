@@ -410,4 +410,6 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         return true
     }
 
+    override fun print() = RBTreePrinter<K, V>().print(this)
+
 }

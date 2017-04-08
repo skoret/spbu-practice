@@ -11,4 +11,6 @@ interface TreeInterface<K: Comparable<K>, V> {
 
     fun delete(key: K?)
 
+    fun print()
+
 }

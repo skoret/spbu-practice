@@ -178,4 +178,6 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
         return true
     }
 
+    override fun print() = BSTreePrinter<K, V>().print(this)
+
 }
