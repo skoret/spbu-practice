@@ -32,9 +32,7 @@ class Node<K: Comparable<K>, V>(var key: K, var value: V): NodeInterface<K, V> {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other?.javaClass != javaClass) return false
-
-        other as Node<*, *>
+        if (other !is Node<*, *>) return false
 
         if (key != other.key) return false
         if (value != other.value) return false

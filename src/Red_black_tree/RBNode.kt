@@ -62,9 +62,7 @@ class RBNode<K: Comparable<K>, V>(var key: K, var value: V): NodeInterface<K, V>
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other?.javaClass != javaClass) return false
-
-        other as RBNode<*, *>
+        if (other !is  RBNode<*, *>) return false
 
         if (key != other.key) return false
         if (value != other.value) return false
