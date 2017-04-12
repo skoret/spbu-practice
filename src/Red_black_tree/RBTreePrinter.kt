@@ -13,7 +13,6 @@ class RBTreePrinter<K: Comparable<K>, V> {
         }
 
         for (node in tree) {
-
             var indent = ""
             var i = 0
 
@@ -26,5 +25,6 @@ class RBTreePrinter<K: Comparable<K>, V> {
         }
 
         println("_____________________")
+
     }
 }

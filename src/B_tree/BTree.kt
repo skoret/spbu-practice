@@ -11,12 +11,9 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
     private val maxNodeSize = 2*t -1
     private var height = 0
 
-    override fun search(key: K?): V?{
+    fun isEmpty() = (root.size() == 0)
 
-        val node = searchNode(key) ?: return null
-
-        return node.value(key)
-    }
+    override fun search(key: K?) = searchNode(key)?.value(key)
 
     private fun searchNode(key: K?, node: BNode<K, V>? = root): BNode<K, V>? {
 
@@ -37,13 +34,15 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
                 return searchNode(key, node.childs[i])
 
             }
+
         }
 
     }
 
-    override fun insert(key: K?, value: V?)  {
+    override fun insert(key: K?, value: V?) {
 
         when {
+
             (key == null || value == null) -> return
 
             (searchNode(key) != null) -> return
@@ -52,20 +51,23 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
 
                 val newRoot = BNode<K, V>()
                 val currentRoot = root
+
                 root = newRoot
                 newRoot.childs.add(currentRoot)
+
                 splitNode(currentRoot, 0, newRoot)
                 insertNonFull(newRoot, key, value)
+
                 height++
 
             }
 
             else -> {
-
                 insertNonFull(root, key, value)
-
             }
+
         }
+
     }
 
     private fun splitNode(node: BNode<K, V>, i: Int, parent: BNode<K, V>) {
@@ -73,22 +75,28 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
         val bro = BNode<K, V>()
 
         for (j in 0..(t - 2)) {
+
               bro.keys.add(node.keys[t])
               bro.values.add(node.values[t])
+
               node.keys.removeAt(t)
               node.values.removeAt(t)
+
         }
 
         if (!node.isLeaf()) {
+
             for (j in 0..(t - 1)) {
                 bro.childs.add(node.childs[t])
                 node.childs.removeAt(t)
             }
+
         }
 
         parent.childs.add(i + 1, bro)
         parent.keys.add(i, node.keys[t - 1])
         parent.values.add(i, node.values[t - 1])
+
         node.keys.removeAt(t - 1)
         node.values.removeAt(t - 1)
 
@@ -103,6 +111,7 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
             while ((i >= 0) && (key < node.keys[i])) {
                 i--
             }
+
             node.keys.add(i + 1, key)
             node.values.add(i + 1, value)
 
@@ -119,6 +128,7 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
                     i++
                 }
             }
+
             insertNonFull(node.childs[i], key, value)
 
         }
@@ -135,6 +145,7 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
         }
 
         deleteInternal(key, root)
+
     }
 
     private fun deleteInternal(key: K, node: BNode<K, V>) {
@@ -188,10 +199,13 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
 
                         node.childs[i].keys.add(node.keys[i])
                         node.childs[i].values.add(node.values[i])
+
                         node.keys[i] = node.childs[i + 1].keys.first()
                         node.values[i] = node.childs[i + 1].values.first()
+
                         node.childs[i + 1].keys.removeAt(0)
                         node.childs[i + 1].values.removeAt(0)
+
                         if (!node.childs[i].isLeaf()) {
                             node.childs[i].childs.add(node.childs[i + 1].childs.first())
                             node.childs[i + 1].childs.removeAt(0)
@@ -205,10 +219,13 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
 
                         node.childs[i].keys.add(0, node.keys[i - 1])
                         node.childs[i].values.add(0, node.values[i - 1])
+
                         node.keys[i - 1] = node.childs[i - 1].keys.last()
                         node.values[i - 1] = node.childs[i - 1].values.last()
+
                         node.childs[i - 1].keys.removeAt(node.childs[i - 1].keys.size - 1)
                         node.childs[i - 1].values.removeAt(node.childs[i - 1].values.size - 1)
+
                         if (!node.childs[i].isLeaf()) {
                             node.childs[i].childs.add(0, node.childs[i - 1].childs.last())
                             node.childs[i - 1].childs.removeAt(node.childs[i - 1].childs.size - 1)
@@ -230,6 +247,7 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
             }
 
             deleteInternal(key, node.childs[i])
+
         }
 
     }
@@ -242,15 +260,17 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
 
         left.keys.add(key)
         left.values.add(parent.values[index]!!)
+
         left.keys.addAll(right.keys)
         left.values.addAll(right.values)
         left.childs.addAll(right.childs)
+
         parent.childs.remove(right)
         parent.keys.removeAt(index)
         parent.values.removeAt(index)
+
         if (parent.keys.isEmpty()) {
             root = left
-            println("new root")
         }
 
     }
@@ -304,6 +324,7 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
     }
 
     override fun equals(other: Any?): Boolean {
+
         if (this === other) return true
         if (other !is BTree<*, *>) return false
 
@@ -322,9 +343,11 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
         for (i in this) {
             println(i)
         }
+
         println()
         println("height $height")
         println("________________________")
+
     }
 
 }

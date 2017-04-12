@@ -9,24 +9,32 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     //but after it'll be private
     internal var root: RBNode<K, V>? = null
 
-    fun isEmpty() = root == null
+    fun isEmpty() = (root == null)
 
     override fun search(key: K?) = searchNode(key)?.value
 
     private fun searchNode(key: K?, currentNode: RBNode<K, V>? = root): RBNode<K, V>? {
 
-        if (key == null) return null
+        when {
 
-        if ((currentNode == null) || (key == currentNode.key)) {
-            return currentNode
+            (key == null) -> {
+                return null
+            }
+
+            ((currentNode == null) || (key == currentNode.key)) -> {
+                return currentNode
+            }
+
+            (key > currentNode.key) -> {
+                return this.searchNode(key, currentNode.right)
+            }
+
+            else -> {
+                return this.searchNode(key, currentNode.left)
+            }
+
         }
 
-        if (key > currentNode.key) {
-            return this.searchNode(key, currentNode.right)
-        }
-        else {
-            return this.searchNode(key, currentNode.left)
-        }
     }
 
     override fun insert(key: K?, value: V?) {
@@ -47,14 +55,17 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
             root!!.recoloring()
             return
         }
+
         insertRecursively(root!!, newNode)
         balance(newNode)
+
         return
     }
 
     private fun insertRecursively(currentNode: RBNode<K, V>, newNode: RBNode<K, V>) {
 
         if (newNode.key > currentNode.key) {
+
             if (currentNode.right == null) {
                 newNode.parent = currentNode
                 currentNode.right = newNode
@@ -63,9 +74,11 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
             else {
                 insertRecursively(currentNode.right!!, newNode)
             }
+
         }
 
         if (newNode.key < currentNode.key) {
+
             if (currentNode.left == null) {
                 newNode.parent = currentNode
                 currentNode.left = newNode
@@ -74,48 +87,65 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
             else {
                 insertRecursively(currentNode.left!!, newNode)
             }
+
         }
+
     }
 
     private fun rightRotate(node: RBNode<K, V>) {
+
         val tmp: RBNode<K, V> = node.left ?: return
+
         tmp.parent = node.parent
+
         if (node.parent != null) {
+
             if (node.key < node.parent!!.key) {
                 node.parent!!.left = tmp
             } else {
                 node.parent!!.right = tmp
             }
+
         } else {
             root = tmp
         }
+
         node.left = tmp.right
         node.left?.parent = node
         node.parent = tmp
         tmp.right = node
+
     }
 
     private fun leftRotate(node: RBNode<K, V>) {
+
         val tmp: RBNode<K, V> = node.right ?: return
+
         tmp.parent = node.parent
+
         if (node.parent != null) {
+
             if (node.key < node.parent!!.key) {
                 node.parent!!.left = tmp
             } else {
                 node.parent!!.right = tmp
             }
+
         } else {
             root = tmp
         }
+
         node.right = tmp.left
         node.right?.parent = node
         node.parent = tmp
         tmp.left = node
+
     }
 
     private fun balance(node: RBNode<K, V>) {
 
         if (node.parent!!.color) {
+
             if ((node.uncle() != null) && (node.uncle()!!.color)) {
                 balanceRecursively(node)
             } else {
@@ -132,18 +162,27 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
                     }
                 }
             }
+
         }
 
-        if (root!!.color) root!!.recoloring()
+        if (root!!.color) {
+            root!!.recoloring()
+        }
 
         return
+
     }
 
     private fun balanceRecursively(node: RBNode<K, V>) {
+
         node.parent!!.recoloring()
         node.uncle()!!.recoloring()
         node.grandparent()!!.recoloring()
-        if (node.grandparent() != root) balance(node.grandparent()!!)
+
+        if (node.grandparent() != root) {
+            balance(node.grandparent()!!)
+        }
+
     }
 
     private fun balanceLeftLeft(node: RBNode<K, V>) {
@@ -176,21 +215,21 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         val min = findMin(node.right)
 
         when {
-            ((node.right != null) && (node.left != null))
-            -> {
+
+            ((node.right != null) && (node.left != null)) -> {
                 val nextKey = min!!.key
                 val nextValue = min.value
                 delete(min.key)
                 node.key = nextKey
                 node.value = nextValue
             }
-            ((node == root) && node.isLeaf())
-            -> {
+
+            ((node == root) && node.isLeaf()) -> {
                 root = null
                 return
             }
-            (node.color && node.isLeaf())
-            -> {
+
+            (node.color && node.isLeaf()) -> {
                 if (node.key < node.parent!!.key) {
                     node.parent!!.left = null
                 } else {
@@ -198,24 +237,25 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
                 }
                 return
             }
-            (!node.color && (node.left != null) && (node.left!!.color))
-            -> {
+
+            (!node.color && (node.left != null) && (node.left!!.color)) -> {
                 node.key = node.left!!.key
                 node.value = node.left!!.value
                 node.left = null
                 return
             }
-            (!node.color && (node.right != null) && (node.right!!.color))
-            -> {
+
+            (!node.color && (node.right != null) && (node.right!!.color)) -> {
                 node.key = node.right!!.key
                 node.value = node.right!!.value
                 node.right = null
                 return
             }
-            else
-            -> {
+
+            else -> {
                 case1(node)
             }
+
         }
 
         if (node.key == key) {
@@ -225,10 +265,13 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
                 node.parent!!.right = null
             }
         }
+
         return
+
     }
 
     private fun case1(node: RBNode<K, V>) {
+
         if (node == root) {
             node.color = false
             return
@@ -239,9 +282,11 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         } else {
             case2Right(node)
         }
+
     }
 
     private fun case2Left(node: RBNode<K, V>) {
+
         val brother = node.brother()!!
 
         if (brother.color) {
@@ -253,9 +298,11 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         }
 
         case3(node)
+
     }
 
     private fun case2Right(node: RBNode<K, V>) {
+
         val brother = node.brother()!!
 
         if (brother.color) {
@@ -267,9 +314,11 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         }
 
         case3(node)
+
     }
 
     private fun case3(node: RBNode<K, V>) {
+
         val brother = node.brother()!!
 
         if (((brother.left == null) || !brother.left!!.color)
@@ -291,9 +340,11 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         } else {
             case4Right(node)
         }
+
     }
 
     private fun case4Left(node: RBNode<K, V>) {
+
         val brother = node.brother()!!
 
         if ((brother.right == null) || !brother.right!!.color) {
@@ -305,9 +356,11 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         }
 
         case5Left(node)
+
     }
 
     private fun case4Right(node: RBNode<K, V>) {
+
         val brother = node.brother()!!
 
         if ((brother.left == null) || !brother.left!!.color) {
@@ -319,9 +372,11 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         }
 
         case5Right(node)
+
     }
 
     private fun case5Left(node: RBNode<K, V>) {
+
         val brother = node.brother()!!
 
         if ((brother.right != null) && brother.right!!.color) {
@@ -332,9 +387,11 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
             leftRotate(node.parent!!)
             return
         }
+
     }
 
     private fun case5Right(node: RBNode<K, V>) {
+
         val brother = node.brother()!!
 
         if ((brother.left != null) && brother.left!!.color) {
@@ -345,6 +402,7 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
             rightRotate(node.parent!!)
             return
         }
+
     }
 
     private fun findMin(node: RBNode<K, V>? = root): RBNode<K, V>? {
@@ -364,24 +422,31 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     }
 
     private fun nextSmaller(node: RBNode<K, V>?): RBNode<K, V>? {
+
         var smaller = node ?: return null
 
         when {
+
             (smaller.left != null) -> {
                 return findMax(smaller.left)
             }
+
             (smaller == smaller.parent?.left) -> {
                 while (smaller == smaller.parent?.left) {
                     smaller = smaller.parent!!
                 }
             }
+
         }
+
         return smaller.parent
+
     }
 
     // reverse in-order iterator
     override fun iterator(): Iterator<RBNode<K, V>> {
         return (object: Iterator<RBNode<K, V>>{
+
             var node = findMax()
             var next = findMax()
             val last = findMin()
@@ -395,10 +460,12 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
                 node = nextSmaller(node)
                 return next!!
             }
+
         })
     }
 
     override fun equals(other: Any?): Boolean {
+
         if (this === other) return true
         if (other !is RedBlackTree<*, *>) return false
 
@@ -410,6 +477,7 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         }
 
         return !(expectedIterator.hasNext() || actualIterator.hasNext())
+
     }
 
     override fun print() = RBTreePrinter<K, V>().print(this)

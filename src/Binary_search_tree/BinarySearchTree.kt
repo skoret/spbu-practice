@@ -7,24 +7,32 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
 
     private var root: Node<K, V>? = null
 
-    fun isEmpty() = root == null
+    fun isEmpty() = (root == null)
 
     override fun search(key: K?) = searchNode(key)?.value
 
     private fun searchNode(key: K?, currentNode: Node<K, V>? = root): Node<K, V>? {
 
-        if (key == null) return null
+        when {
 
-        if ((currentNode == null) || (key == currentNode.key)) {
-            return currentNode
+            (key == null) -> {
+                return null
+            }
+
+            ((currentNode == null) || (key == currentNode.key)) -> {
+                return currentNode
+            }
+
+            (key > currentNode.key) -> {
+                return this.searchNode(key, currentNode.right)
+            }
+
+            else -> {
+                return this.searchNode(key, currentNode.left)
+            }
+
         }
 
-        if (key > currentNode.key) {
-            return this.searchNode(key, currentNode.right)
-        }
-        else {
-            return this.searchNode(key, currentNode.left)
-        }
     }
 
     override fun insert(key: K?, value: V?) {
@@ -44,13 +52,16 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
             root = newNode
             return
         }
+
         insertRecursively(root!!, newNode)
         return
+
     }
 
     private fun insertRecursively(currentNode: Node<K, V>, newNode: Node<K, V>) {
 
         if (newNode.key > currentNode.key) {
+
             if (currentNode.right == null) {
                 newNode.parent = currentNode
                 currentNode.right = newNode
@@ -59,9 +70,11 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
             else {
                 insertRecursively(currentNode.right!!, newNode)
             }
+
         }
 
         if (newNode.key < currentNode.key) {
+
             if (currentNode.left == null) {
                 newNode.parent = currentNode
                 currentNode.left = newNode
@@ -70,7 +83,9 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
             else {
                 insertRecursively(currentNode.left!!, newNode)
             }
+
         }
+
     }
 
     override fun delete(key: K?) {
@@ -78,6 +93,7 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
         val node = searchNode(key) ?: return
 
         when {
+
             (node.isLeaf()) -> {
                 when {
                     (node == root) -> {
@@ -94,6 +110,7 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
                     }
                 }
             }
+
             (node.right != null) -> {
                 val nextKey = findMin(node.right)!!.key
                 val nextValue = findMin(node.right)!!.value
@@ -101,6 +118,7 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
                 node.key = nextKey
                 node.value = nextValue
             }
+
             (node.left != null) -> {
                 val prevKey = findMax(node.left)!!.key
                 val prevValue = findMax(node.left)!!.value
@@ -108,6 +126,7 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
                 node.key = prevKey
                 node.value = prevValue
             }
+
         }
 
     }
@@ -129,24 +148,31 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
     }
 
     private fun nextSmaller(node: Node<K, V>?): Node<K, V>? {
+
         var smaller = node ?: return null
 
         when {
+
             (smaller.left != null) -> {
                 return findMax(smaller.left)
             }
+
             (smaller == smaller.parent?.left) -> {
                 while (smaller == smaller.parent?.left) {
                     smaller = smaller.parent!!
                 }
             }
+
         }
+
         return smaller.parent
+
     }
 
     // reverse in-order iterator
     override fun iterator(): Iterator<Node<K, V>> {
         return (object: Iterator<Node<K, V>>{
+
             var node = findMax()
             var next = findMax()
             val last = findMin()
@@ -160,10 +186,12 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
                 node = nextSmaller(node)
                 return next!!
             }
+
         })
     }
 
     override fun equals(other: Any?): Boolean {
+
         if (this === other) return true
         if (other !is BinarySearchTree<*, *>) return false
 
@@ -175,6 +203,7 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
         }
 
         return !(expectedIterator.hasNext() || actualIterator.hasNext())
+
     }
 
     override fun print() = BSTreePrinter<K, V>().print(this)

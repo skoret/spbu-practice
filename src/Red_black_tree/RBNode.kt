@@ -3,32 +3,33 @@
  * SPSU. 2017.
  */
 
-class RBNode<K: Comparable<K>, V>(var key: K, var value: V): NodeInterface<K, V> {
+class RBNode<K: Comparable<K>, V>(var key: K, var value: V) {
 
     var parent: RBNode<K, V>? = null
     var left: RBNode<K, V>? = null
     var right: RBNode<K, V>? = null
-// true == red, false == black
+    // true == red, false == black
     var color: Boolean = true
 
-    override fun toString(): String {
-        // {v} == red, [v] == black
-        val open: String
-        val close: String
-        when {
-            color -> {
-                open = "{"
-                close = "}"
-            }
-            else -> {
-                open = "["
-                close = "]"
-            }
+    fun isLeaf(): Boolean = ((right == null) && (left == null))
+
+    fun high(): Int {
+
+        var currentNode = this
+        var count = 0
+        while (currentNode.parent != null) {
+            currentNode = currentNode.parent!!
+            count++
         }
-        return open + this.value.toString() + close
+        return count
+
     }
 
-    override fun isLeaf(): Boolean = ((right == null) && (left == null))
+    fun branch(): String = when {
+        this.parent == null -> ""
+        this.key > this.parent!!.key -> "/"
+        else -> "\\"
+    }
 
     fun grandparent(): RBNode<K, V>? = this.parent?.parent
 
@@ -43,24 +44,27 @@ class RBNode<K: Comparable<K>, V>(var key: K, var value: V): NodeInterface<K, V>
         return this.parent?.left
     }
 
-    fun high(): Int {
-        var currentNode = this
-        var count = 0
-        while (currentNode.parent != null) {
-            currentNode = currentNode.parent!!
-            count++
-        }
-        return count
-    }
+    override fun toString(): String {
 
-    fun branch(): String = when {
-        this.parent == null -> ""
-        this.key > this.parent!!.key -> "/"
-        this.key < this.parent!!.key -> "\\"
-        else -> ""
+        // {v} == red, [v] == black
+        val open: String
+        val close: String
+        when {
+            color -> {
+                open = "{"
+                close = "}"
+            }
+            else -> {
+                open = "["
+                close = "]"
+            }
+        }
+        return open + this.value.toString() + close
+
     }
 
     override fun equals(other: Any?): Boolean {
+
         if (this === other) return true
         if (other !is  RBNode<*, *>) return false
 
@@ -69,6 +73,7 @@ class RBNode<K: Comparable<K>, V>(var key: K, var value: V): NodeInterface<K, V>
         if (color != other.color) return false
 
         return true
+
     }
 
 }
