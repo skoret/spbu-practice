@@ -5,7 +5,9 @@
 
 class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K, V>> {
 
-    private var root: RBNode<K, V>? = null
+    //field root is internal for tests
+    //but after it'll be private
+    internal var root: RBNode<K, V>? = null
 
     fun isEmpty() = root == null
 
@@ -75,7 +77,7 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         }
     }
 
-    fun rightRotate(node: RBNode<K, V>) {
+    private fun rightRotate(node: RBNode<K, V>) {
         val tmp: RBNode<K, V> = node.left ?: return
         tmp.parent = node.parent
         if (node.parent != null) {
@@ -93,7 +95,7 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
         tmp.right = node
     }
 
-    fun leftRotate(node: RBNode<K, V>) {
+    private fun leftRotate(node: RBNode<K, V>) {
         val tmp: RBNode<K, V> = node.right ?: return
         tmp.parent = node.parent
         if (node.parent != null) {
@@ -167,6 +169,7 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     }
 
     override fun delete(key: K?) {
+
         if (key == null) return
 
         val node = searchNode(key, root) ?: return
@@ -195,7 +198,7 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
                 }
                 return
             }
-            (!node.color && ((node.left != null) && (node.left!!.color)))
+            (!node.color && (node.left != null) && (node.left!!.color))
             -> {
                 node.key = node.left!!.key
                 node.value = node.left!!.value
@@ -239,9 +242,9 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     }
 
     private fun case2Left(node: RBNode<K, V>) {
-        val brother = node.brother()
+        val brother = node.brother()!!
 
-        if (brother!!.color) {
+        if (brother.color) {
             node.parent!!.recoloring()
             brother.recoloring()
             leftRotate(node.parent!!)
@@ -253,9 +256,9 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     }
 
     private fun case2Right(node: RBNode<K, V>) {
-        val brother = node.brother()
+        val brother = node.brother()!!
 
-        if (brother!!.color) {
+        if (brother.color) {
             node.parent!!.recoloring()
             brother.recoloring()
             rightRotate(node.parent!!)
@@ -267,9 +270,9 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     }
 
     private fun case3(node: RBNode<K, V>) {
-        val brother = node.brother()
+        val brother = node.brother()!!
 
-        if (((brother!!.left == null) || !brother.left!!.color)
+        if (((brother.left == null) || !brother.left!!.color)
             &&
             ((brother.right == null) || !brother.right!!.color))
         {
@@ -291,9 +294,9 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     }
 
     private fun case4Left(node: RBNode<K, V>) {
-        val brother = node.brother()
+        val brother = node.brother()!!
 
-        if ((brother!!.right == null) || !brother.right!!.color) {
+        if ((brother.right == null) || !brother.right!!.color) {
             brother.recoloring()
             brother.left!!.recoloring()
             rightRotate(brother)
@@ -305,9 +308,9 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     }
 
     private fun case4Right(node: RBNode<K, V>) {
-        val brother = node.brother()
+        val brother = node.brother()!!
 
-        if ((brother!!.left == null) || !brother.left!!.color) {
+        if ((brother.left == null) || !brother.left!!.color) {
             brother.recoloring()
             brother.right!!.recoloring()
             leftRotate(brother)
@@ -319,9 +322,9 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     }
 
     private fun case5Left(node: RBNode<K, V>) {
-        val brother = node.brother()
+        val brother = node.brother()!!
 
-        if ((brother!!.right != null) && brother.right!!.color) {
+        if ((brother.right != null) && brother.right!!.color) {
             brother.color = node.parent!!.color
             node.color = false
             node.parent!!.color = false
@@ -332,9 +335,9 @@ class RedBlackTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<RBNode<K,
     }
 
     private fun case5Right(node: RBNode<K, V>) {
-        val brother = node.brother()
+        val brother = node.brother()!!
 
-        if ((brother!!.left != null) && brother.left!!.color) {
+        if ((brother.left != null) && brother.left!!.color) {
             brother.color = node.parent!!.color
             node.color = false
             node.parent!!.color = false
