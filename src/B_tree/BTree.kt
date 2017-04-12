@@ -8,7 +8,7 @@ import java.util.*
 class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNode<K, V>> {
 
     private var root = BNode<K, V>()
-    private val maxSize = 2*t -1
+    private val maxNodeSize = 2*t -1
     private var height = 0
 
     override fun search(key: K?): V?{
@@ -48,7 +48,7 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
 
             (searchNode(key) != null) -> return
 
-            (root.size() == maxSize) -> {
+            (root.size() == maxNodeSize) -> {
 
                 val newRoot = BNode<K, V>()
                 val currentRoot = root
@@ -113,7 +113,7 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
             }
             i++
 
-            if (node.childs[i].size() == maxSize) {
+            if (node.childs[i].size() == maxNodeSize) {
                 splitNode(node.childs[i], i, node)
                 if (key > node.keys[i]) {
                     i++
