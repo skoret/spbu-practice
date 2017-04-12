@@ -167,15 +167,14 @@ class BinarySearchTree<K: Comparable<K>, V>: TreeInterface<K, V>, Iterable<Node<
         if (this === other) return true
         if (other !is BinarySearchTree<*, *>) return false
 
-        val iteratorThis = this.iterator()
+        val expectedIterator = this.iterator()
+        val actualIterator = other.iterator()
 
-        for (i in other) {
-            if (!iteratorThis.hasNext()) return false
-            if (i != iteratorThis.next()) return false
+        while(expectedIterator.hasNext() && actualIterator.hasNext()) {
+            if (expectedIterator.next() != actualIterator.next()) return false
         }
-        if (iteratorThis.hasNext()) return false
 
-        return true
+        return !(expectedIterator.hasNext() || actualIterator.hasNext())
     }
 
     override fun print() = BSTreePrinter<K, V>().print(this)
