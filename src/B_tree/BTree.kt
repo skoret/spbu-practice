@@ -328,18 +328,24 @@ class BTree<K: Comparable<K>, V>(val t: Int): TreeInterface<K, V>, Iterable<BNod
         if (this === other) return true
         if (other !is BTree<*, *>) return false
 
-        val iteratorThis = this.iterator()
+        val expectedIterator = this.iterator()
+        val actualIterator = other.iterator()
 
-        for (i in other) {
-            if (!iteratorThis.hasNext()) return false
-            if (i != iteratorThis.next()) return false
+        while(expectedIterator.hasNext() && actualIterator.hasNext()) {
+            if (expectedIterator.next() != actualIterator.next()) return false
         }
-        if (iteratorThis.hasNext()) return false
 
-        return true
+        return !(expectedIterator.hasNext() || actualIterator.hasNext())
+
     }
 
     override fun print() {
+
+        if (this.isEmpty()) {
+            println("tree is empty")
+            return
+        }
+
         for (i in this) {
             println(i)
         }
