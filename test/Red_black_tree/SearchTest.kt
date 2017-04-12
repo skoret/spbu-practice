@@ -17,6 +17,7 @@ internal class SearchTest {
         val tree = RedBlackTree<Int, Int>()
 
         assertNull(tree.search(null))
+
     }
 
     @Test
