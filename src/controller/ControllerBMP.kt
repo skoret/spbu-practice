@@ -9,14 +9,14 @@ import java.io.FileInputStream
  * SPSU. 2017.
  */
 
-class ControllerBMP(path: String, val view: Viewer): Controller {
+class ControllerBMP(private val path: String, private val view: Viewer): Controller {
 
-    val file = FileInputStream(path)
-    val name = path.takeLastWhile { it != '/' }
-    val data = ByteArray(file.available())
+    private val data: ByteArray
 
     init {
 
+        val file = FileInputStream(path)
+        data = ByteArray(file.available())
         file.read(data)
 
         if (!validateFormat()) throw IllegalArgumentException("Wrong format file.")
@@ -28,6 +28,8 @@ class ControllerBMP(path: String, val view: Viewer): Controller {
     }
 
     override fun createModel(): BMP {
+
+        val name = path.takeLastWhile { it != '/' }
 
         val bitCount = data[0x1c].toInt()
         val model: BMP

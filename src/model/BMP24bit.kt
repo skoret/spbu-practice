@@ -23,7 +23,7 @@ class BMP24bit(override val name: String, override val data: ByteArray): BMP(nam
                 val pixel = getColorFormBytes(currentByte, false) // Color(red, green, blue)
                 currentByte -= 3
 
-                image!!.setRGB(i, j, pixel.rgb)
+                image.setRGB(i, j, pixel.rgb)
 
             }
 

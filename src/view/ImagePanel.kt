@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage
  * SPSU. 2017.
  */
 
-class ImagePanel(val image: BufferedImage): JPanel() {
+class ImagePanel(private val image: BufferedImage): JPanel() {
 
     override fun paintComponent(g: Graphics) {
         super.paintComponent(g)

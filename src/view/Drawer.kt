@@ -8,7 +8,7 @@ import javax.swing.*
  * SPSU. 2017.
  */
 
-class Drawer(val frame: JFrame) {
+class Drawer(private val frame: JFrame) {
 
     fun draw(model: File) {
 

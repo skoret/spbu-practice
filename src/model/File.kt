@@ -12,7 +12,6 @@ interface File {
     val name: String
     val data: ByteArray
     var image: BufferedImage
-    var size: Long
     var width: Int
     var height: Int
 

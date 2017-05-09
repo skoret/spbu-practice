@@ -14,15 +14,16 @@ abstract class BMP(override val name: String, override val data: ByteArray): Fil
     override lateinit var image: BufferedImage
 
     //header
-    override var size: Long = 0
     override var height: Int = 0
     override var width: Int = 0
-    var offset: Long = 0
-    var bitCount: Int = 0
-    var alignment: Int = 0
-    val colorTable = mutableListOf<Color>()
+    protected var offset: Long = 0
+    private var bitCount: Int = 0
+
+    protected var alignment: Int = 0
+    protected val colorTable = mutableListOf<Color>()
 
 //     useless header's fields
+//    var size: Long = 0
 //    var biSize: Long = 0
 //    var planes: Int = 0
 //    var compression: Long = 0
@@ -34,7 +35,6 @@ abstract class BMP(override val name: String, override val data: ByteArray): Fil
 
     override fun parseHeader() {
 
-        size = getValueOfBytes(4, 0x02)
         offset = getValueOfBytes(4, 0x0a)
         width = getValueOfBytes(4, 0x12).toInt()
         height = getValueOfBytes(4, 0x16).toInt()
@@ -45,6 +45,7 @@ abstract class BMP(override val name: String, override val data: ByteArray): Fil
             alignment = 4 - (length % 4)
         }
 
+//        size = getValueOfBytes(4, 0x02)
 //        biSize = getValueOfBytes(4, 0x0e)
 //        planes = getValueOfBytes(2, 0x1a).toInt()
 //        compression = getValueOfBytes(4, 0x1e)
@@ -77,6 +78,7 @@ abstract class BMP(override val name: String, override val data: ByteArray): Fil
         if (blue < 0) blue += 256
 
         return Color(red, green, blue, alpha)
+
     }
 
 }
