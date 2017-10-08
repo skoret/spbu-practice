@@ -27,4 +27,12 @@ find' (Node' a x y) b | a == b = True
                       | a > b = find' x b
                       | otherwise = find' y b
 
+data Tree'' a = Leaf'' a | Node'' a (Tree'' a) (Tree'' a) deriving (Show, Eq)
 
+find'' (Leaf'' a) b = a == b
+find'' (Node'' a x y) b | a == b = True
+                        | a > b = find'' x b
+                        | otherwise = find'' y b
+
+mapT'' f (Leaf'' a) = Leaf'' (f a)
+mapT'' f (Node'' a x y) = Node'' (f a) (mapT'' f x) (mapT'' f y)
