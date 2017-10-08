@@ -1,5 +1,6 @@
 module Demo where
 import Data.Char
+import Data.List
 
 factorial n = if n == 0 then 1 else n * factorial (n - 1)
 
@@ -189,3 +190,30 @@ evenOnly' = f `seq` reverse . snd . foldr f (0,[])
     where 
         f :: a -> (Integer,[a]) -> (Integer,[a])
         f = (\x p -> if mod (fst p) 2 == 0 then ((fst p)+1,(snd p) ++ [x]) else ((fst p)+1,snd p))
+
+
+data Bit = Zero | One deriving Show
+data Sign = Minus | Plus deriving Show
+data Z = Z Sign [Bit] deriving Show
+
+zToInt :: Z -> Int
+zToInt (Z Minus a) = - (zToInt (Z Plus a))
+zToInt (Z Plus a) = snd (foldl f (0,0) a)
+    where
+        f (n,x) Zero = (n+1,x)
+        f (n,x) One = (n+1,x+2^n)
+
+intToZ :: Int -> Z
+intToZ a | a >= 0 = Z Plus (unfoldr ff a)
+         | otherwise = Z Minus (unfoldr ff (abs a))
+    where
+        ff :: Int -> Maybe (Bit, Int)
+        ff 0 = Nothing
+        ff x = Just (if mod x 2 == 1 then One else Zero, div x 2)
+        
+
+add :: Z -> Z -> Z
+add a b = intToZ (x+y)
+    where
+        x = zToInt a
+        y = zToInt b
