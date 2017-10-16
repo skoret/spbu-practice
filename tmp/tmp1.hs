@@ -217,3 +217,21 @@ add a b = intToZ (x+y)
     where
         x = zToInt a
         y = zToInt b
+
+data Nat = Zero' | Suc Nat deriving Show
+
+fromNat :: Nat -> Integer
+fromNat Zero' = 0
+fromNat (Suc n) = fromNat n + 1
+
+toNat :: Integer -> Nat
+toNat 0 = Zero'
+toNat n = Suc $ toNat $ n-1
+
+add' :: Nat -> Nat -> Nat
+add' (Suc a) b = Suc $ add' a b
+add' a (Suc b) = Suc $ add' a b
+add' Zero' b = b
+
+mul :: Nat -> Nat -> Nat
+mul a b = toNat $ fromNat a * fromNat b
