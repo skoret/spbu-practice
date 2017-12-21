@@ -1,0 +1,98 @@
+choose action:
+1 - insert pairs <key value> // for stop enter ' . '
+2 - find values by keys
+3 - delete values by keys
+4 - print tree // and perfom all operations
+5 - compare simple bst and parallel bst
+help - show cmds
+exit - end work with tree
+> > > > > insert 3
+insert 2
+insert 4
+insert 1
+insert 5
+insert 6
+insert 7
+insert 9
+insert 8
+insert 10
+delete 1
+delete 2
+delete 4
+delete 3
+delete 5
+insert 15
+insert 20
+insert 19
+insert 11
+insert 16
+insert 14
+insert 12
+insert 18
+delete 1
+delete 2
+insert 13
+delete 4
+delete 5
+delete 3
+insert 17
+delete 7
+delete 7
+delete 7
+delete 8
+delete 11
+delete 9
+delete 10
+delete 6
+
+  /(20,20)
+    \(19,19)
+        /(18,18)
+          \(17,17)
+      \(16,16)
+(15,15)
+  \(14,14)
+      /(13,13)
+    \(12,12)
+_____________________
+> compare insertion on 1000 keys:
+seq insertion time in simple bst: 00:00:00.0019371
+seq insertion time in locked bst: 00:00:00.0035908
+conc insertion time in locked bst: 00:00:00.0021308
+conc insertion time in async locked bst: 00:00:00.0192847
+compare deletion:
+seq deletion time in simple bst: 00:00:00.0214397
+seq deletion time in locked bst: 00:00:00.0222997
+conc deletion time in locked bst: 00:00:00.0011947
+conc deletion time in async locked bst: 00:00:00.0162134
+> compare insertion on 10000 keys:
+seq insertion time in simple bst: 00:00:00.0146470
+seq insertion time in locked bst: 00:00:00.0423807
+conc insertion time in locked bst: 00:00:00.0310092
+conc insertion time in async locked bst: 00:00:00.0480572
+compare deletion:
+seq deletion time in simple bst: 00:00:00.0548182
+seq deletion time in locked bst: 00:00:00.0652048
+conc deletion time in locked bst: 00:00:00.0090014
+conc deletion time in async locked bst: 00:00:00.0251344
+> compare insertion on 100000 keys:
+seq insertion time in simple bst: 00:00:00.1982468
+seq insertion time in locked bst: 00:00:00.5344261
+conc insertion time in locked bst: 00:00:00.4574866
+conc insertion time in async locked bst: 00:00:00.6450429
+compare deletion:
+seq deletion time in simple bst: 00:00:00.7100123
+seq deletion time in locked bst: 00:00:00.8364637
+conc deletion time in locked bst: 00:00:00.2239042
+conc deletion time in async locked bst: 00:00:00.3771648
+> compare insertion on 1000000 keys:
+seq insertion time in simple bst: 00:00:03.5010163
+seq insertion time in locked bst: 00:00:08.5337859
+conc insertion time in locked bst: 00:00:04.5564956
+conc insertion time in async locked bst: 00:00:08.5903735
+compare deletion:
+seq deletion time in simple bst: 00:00:09.8821345
+seq deletion time in locked bst: 00:00:12.0484778
+conc deletion time in locked bst: 00:00:01.8798385
+conc deletion time in async locked bst: 00:00:02.6787070
+> uhadi
