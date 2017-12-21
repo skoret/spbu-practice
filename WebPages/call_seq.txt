@@ -1,0 +1,199 @@
+inside getcharcount: https://www.youtube.com/
+________________ depth : 2
+inside downloader: https://www.youtube.com/
+inside callback: https://www.youtube.com/
+end of callback: https://www.youtube.com/
+end of downloader: https://www.youtube.com/
+inside getlinks: https://www.youtube.com/
+end of getlinks: https://www.youtube.com/
+________________ depth : 1
+inside downloader: https://plus.google.com/+youtube
+inside downloader: https://www.google.ru/intl/ru/policies/privacy/
+inside callback: https://www.google.ru/intl/ru/policies/privacy/
+end of callback: https://www.google.ru/intl/ru/policies/privacy/
+end of downloader: https://www.google.ru/intl/ru/policies/privacy/
+inside callback: https://plus.google.com/+youtube
+end of callback: https://plus.google.com/+youtube
+end of downloader: https://plus.google.com/+youtube
+inside getlinks: https://plus.google.com/+youtube
+end of getlinks: https://plus.google.com/+youtube
+inside getlinks: https://www.google.ru/intl/ru/policies/privacy/
+end of getlinks: https://www.google.ru/intl/ru/policies/privacy/
+________________ depth : 0
+inside downloader: https://support.google.com/plus/?hl=en_US
+inside downloader: https://myaccount.google.com/privacypolicy?hl=en-US
+inside downloader: https://youtu.be/Z1-BczTKq3o
+inside downloader: https://youtu.be/PNsv84BLbaM
+inside downloader: https://www.youtube.com/c/ITConsalting
+inside downloader: https://goo.gl/A0fBPp
+inside downloader: https://goo.gl/VCeiUu
+inside downloader: https://www.youtube.com/watch?v=wSJppP2eDl4
+inside downloader: https://www.youtube.com/channel/UCrRKwrKdWR7OXOvtdnAb05A
+inside downloader: https://goo.gl/CEQKN8
+inside downloader: https://youtu.be/XPYnvI5GH4Y
+inside downloader: https://www.freegrabapp.com/free-youtube-download
+inside downloader: https://goo.gl/yMbvi8
+inside downloader: https://youtu.be/4Bz8b69rhHk
+inside downloader: https://www.youtube.com/watch?v=8A7ny8sHj2E&amp;t=29s
+inside downloader: http://youtube.com/coachella
+inside downloader: https://youtu.be/50n-NUB7ZTA
+inside downloader: https://youtu.be/C1SBgDoZ28s
+inside downloader: https://goo.gl/th687a
+inside downloader: https://youtu.be/q7kXCriToCY
+inside downloader: https://myaccount.google.com/?hl=ru
+inside downloader: https://support.google.com/policies/troubleshooter/2990837?hl=ru
+inside downloader: https://support.google.com/accounts/answer/112783?hl=ru
+inside downloader: https://myaccount.google.com/privacy?hl=ru#accounthistory
+inside downloader: https://myaccount.google.com/privacy?hl=ru#toolsyoucanusenow
+inside downloader: https://www.google.com/dashboard/?hl=ru
+inside downloader: https://www.google.com/settings/ads/preferences?hl=ru
+inside downloader: https://support.google.com/plus/answer/1355890?hl=ru
+inside downloader: https://support.google.com/plus/bin/static.py?hl=ru&amp;page=guide.cs&amp;guide=1257347
+inside downloader: https://www.dataliberation.org/
+inside downloader: https://plus.google.com/settings/endorsements?hl=ru
+inside downloader: https://support.google.com/a/answer/178897?hl=ru
+inside downloader: https://support.google.com/websearch/answer/173733?hl=ru
+inside downloader: https://www.google.com/chrome/intl/ru/more/security.html
+inside downloader: https://www.google.com/chrome/intl/ru/privacy.html
+inside downloader: https://play.google.com/books/intl/ru/privacy.html
+inside downloader: https://payments.google.com/legaldocument?family=0.privacynotice&amp;hl=ru
+inside downloader: https://fiber.google.com/legal/privacy.html
+inside downloader: https://fi.google.com/about/tos/#project-fi-privacy-notice
+inside downloader: https://www.google.com/work/apps/terms/education_privacy.html
+inside downloader: https://kids.youtube.com/privacynotice
+inside downloader: https://families.google.com/familylink/privacy/child-policy/
+inside downloader: https://myaccount.google.com/privacycheckup/1?hl=ru
+inside downloader: https://privacy.google.com/?hl=ru
+inside downloader: https://myaccount.google.com?hl=ru
+inside downloader: https://privacy.google.com?hl=ru
+exception inside downloader: https://goo.gl/A0fBPp >> The remote server returned an error: (404) Not Found.
+exception inside downloader: https://goo.gl/CEQKN8 >> The remote server returned an error: (404) Not Found.
+inside callback: https://fi.google.com/about/tos/#project-fi-privacy-notice
+end of callback: https://fi.google.com/about/tos/#project-fi-privacy-notice
+end of downloader: https://fi.google.com/about/tos/#project-fi-privacy-notice
+inside callback: https://privacy.google.com?hl=ru
+end of callback: https://privacy.google.com?hl=ru
+end of downloader: https://privacy.google.com?hl=ru
+inside callback: https://families.google.com/familylink/privacy/child-policy/
+end of callback: https://families.google.com/familylink/privacy/child-policy/
+end of downloader: https://families.google.com/familylink/privacy/child-policy/
+inside callback: https://privacy.google.com/?hl=ru
+end of callback: https://privacy.google.com/?hl=ru
+end of downloader: https://privacy.google.com/?hl=ru
+exception inside downloader: https://goo.gl/VCeiUu >> The remote server returned an error: (404) Not Found.
+inside callback: https://myaccount.google.com/privacypolicy?hl=en-US
+end of callback: https://myaccount.google.com/privacypolicy?hl=en-US
+end of downloader: https://myaccount.google.com/privacypolicy?hl=en-US
+inside callback: https://www.google.com/work/apps/terms/education_privacy.html
+end of callback: https://www.google.com/work/apps/terms/education_privacy.html
+end of downloader: https://www.google.com/work/apps/terms/education_privacy.html
+inside callback: https://www.youtube.com/c/ITConsalting
+end of callback: https://www.youtube.com/c/ITConsalting
+end of downloader: https://www.youtube.com/c/ITConsalting
+exception inside downloader: https://goo.gl/yMbvi8 >> The remote server returned an error: (404) Not Found.
+inside callback: https://play.google.com/books/intl/ru/privacy.html
+end of callback: https://play.google.com/books/intl/ru/privacy.html
+end of downloader: https://play.google.com/books/intl/ru/privacy.html
+inside callback: https://www.google.com/chrome/intl/ru/more/security.html
+end of callback: https://www.google.com/chrome/intl/ru/more/security.html
+end of downloader: https://www.google.com/chrome/intl/ru/more/security.html
+inside callback: https://support.google.com/policies/troubleshooter/2990837?hl=ru
+end of callback: https://support.google.com/policies/troubleshooter/2990837?hl=ru
+end of downloader: https://support.google.com/policies/troubleshooter/2990837?hl=ru
+inside callback: https://www.youtube.com/watch?v=wSJppP2eDl4
+end of callback: https://www.youtube.com/watch?v=wSJppP2eDl4
+end of downloader: https://www.youtube.com/watch?v=wSJppP2eDl4
+inside callback: https://payments.google.com/legaldocument?family=0.privacynotice&amp;hl=ru
+end of callback: https://payments.google.com/legaldocument?family=0.privacynotice&amp;hl=ru
+end of downloader: https://payments.google.com/legaldocument?family=0.privacynotice&amp;hl=ru
+inside callback: https://fiber.google.com/legal/privacy.html
+end of callback: https://fiber.google.com/legal/privacy.html
+end of downloader: https://fiber.google.com/legal/privacy.html
+inside callback: https://kids.youtube.com/privacynotice
+end of callback: https://kids.youtube.com/privacynotice
+end of downloader: https://kids.youtube.com/privacynotice
+inside callback: https://plus.google.com/settings/endorsements?hl=ru
+end of callback: https://plus.google.com/settings/endorsements?hl=ru
+end of downloader: https://plus.google.com/settings/endorsements?hl=ru
+inside callback: https://myaccount.google.com/privacy?hl=ru#accounthistory
+end of callback: https://myaccount.google.com/privacy?hl=ru#accounthistory
+end of downloader: https://myaccount.google.com/privacy?hl=ru#accounthistory
+inside callback: https://www.google.com/chrome/intl/ru/privacy.html
+end of callback: https://www.google.com/chrome/intl/ru/privacy.html
+end of downloader: https://www.google.com/chrome/intl/ru/privacy.html
+inside callback: https://myaccount.google.com/?hl=ru
+end of callback: https://myaccount.google.com/?hl=ru
+end of downloader: https://myaccount.google.com/?hl=ru
+inside callback: https://www.youtube.com/channel/UCrRKwrKdWR7OXOvtdnAb05A
+end of callback: https://www.youtube.com/channel/UCrRKwrKdWR7OXOvtdnAb05A
+end of downloader: https://www.youtube.com/channel/UCrRKwrKdWR7OXOvtdnAb05A
+inside callback: https://www.freegrabapp.com/free-youtube-download
+end of callback: https://www.freegrabapp.com/free-youtube-download
+end of downloader: https://www.freegrabapp.com/free-youtube-download
+inside callback: https://www.google.com/settings/ads/preferences?hl=ru
+end of callback: https://www.google.com/settings/ads/preferences?hl=ru
+end of downloader: https://www.google.com/settings/ads/preferences?hl=ru
+inside callback: https://support.google.com/websearch/answer/173733?hl=ru
+end of callback: https://support.google.com/websearch/answer/173733?hl=ru
+end of downloader: https://support.google.com/websearch/answer/173733?hl=ru
+inside callback: https://support.google.com/plus/?hl=en_US
+end of callback: https://support.google.com/plus/?hl=en_US
+end of downloader: https://support.google.com/plus/?hl=en_US
+inside callback: https://myaccount.google.com/privacy?hl=ru#toolsyoucanusenow
+end of callback: https://myaccount.google.com/privacy?hl=ru#toolsyoucanusenow
+end of downloader: https://myaccount.google.com/privacy?hl=ru#toolsyoucanusenow
+inside callback: https://www.youtube.com/watch?v=8A7ny8sHj2E&amp;t=29s
+end of callback: https://www.youtube.com/watch?v=8A7ny8sHj2E&amp;t=29s
+end of downloader: https://www.youtube.com/watch?v=8A7ny8sHj2E&amp;t=29s
+inside callback: https://myaccount.google.com/privacycheckup/1?hl=ru
+end of callback: https://myaccount.google.com/privacycheckup/1?hl=ru
+end of downloader: https://myaccount.google.com/privacycheckup/1?hl=ru
+inside callback: https://www.google.com/dashboard/?hl=ru
+end of callback: https://www.google.com/dashboard/?hl=ru
+end of downloader: https://www.google.com/dashboard/?hl=ru
+inside callback: https://myaccount.google.com?hl=ru
+end of callback: https://myaccount.google.com?hl=ru
+end of downloader: https://myaccount.google.com?hl=ru
+inside callback: https://support.google.com/accounts/answer/112783?hl=ru
+end of callback: https://support.google.com/accounts/answer/112783?hl=ru
+end of downloader: https://support.google.com/accounts/answer/112783?hl=ru
+inside callback: https://www.dataliberation.org/
+end of callback: https://www.dataliberation.org/
+end of downloader: https://www.dataliberation.org/
+inside callback: https://youtu.be/Z1-BczTKq3o
+end of callback: https://youtu.be/Z1-BczTKq3o
+end of downloader: https://youtu.be/Z1-BczTKq3o
+inside callback: https://youtu.be/PNsv84BLbaM
+end of callback: https://youtu.be/PNsv84BLbaM
+end of downloader: https://youtu.be/PNsv84BLbaM
+inside callback: https://support.google.com/plus/answer/1355890?hl=ru
+end of callback: https://support.google.com/plus/answer/1355890?hl=ru
+end of downloader: https://support.google.com/plus/answer/1355890?hl=ru
+inside callback: https://support.google.com/plus/bin/static.py?hl=ru&amp;page=guide.cs&amp;guide=1257347
+end of callback: https://support.google.com/plus/bin/static.py?hl=ru&amp;page=guide.cs&amp;guide=1257347
+end of downloader: https://support.google.com/plus/bin/static.py?hl=ru&amp;page=guide.cs&amp;guide=1257347
+inside callback: https://support.google.com/a/answer/178897?hl=ru
+end of callback: https://support.google.com/a/answer/178897?hl=ru
+end of downloader: https://support.google.com/a/answer/178897?hl=ru
+inside callback: https://youtu.be/XPYnvI5GH4Y
+end of callback: https://youtu.be/XPYnvI5GH4Y
+end of downloader: https://youtu.be/XPYnvI5GH4Y
+inside callback: https://youtu.be/50n-NUB7ZTA
+end of callback: https://youtu.be/50n-NUB7ZTA
+end of downloader: https://youtu.be/50n-NUB7ZTA
+inside callback: https://youtu.be/C1SBgDoZ28s
+end of callback: https://youtu.be/C1SBgDoZ28s
+end of downloader: https://youtu.be/C1SBgDoZ28s
+inside callback: https://goo.gl/th687a
+end of callback: https://goo.gl/th687a
+end of downloader: https://goo.gl/th687a
+inside callback: https://youtu.be/q7kXCriToCY
+end of callback: https://youtu.be/q7kXCriToCY
+end of downloader: https://youtu.be/q7kXCriToCY
+inside callback: https://youtu.be/4Bz8b69rhHk
+end of callback: https://youtu.be/4Bz8b69rhHk
+end of downloader: https://youtu.be/4Bz8b69rhHk
+inside callback: http://youtube.com/coachella
+end of callback: http://youtube.com/coachella
+end of downloader: http://youtube.com/coachella
+'exception inside getcharcount: System.Collections.ListDictionaryInternal
