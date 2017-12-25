@@ -226,6 +226,46 @@ namespace BinarySearchTreeParallel
                         tasksList.Clear();
                         Console.WriteLine("conc deletion time in async locked bst: {0}", sw.Elapsed);
                         
+                        Console.WriteLine("compare search:", amount);
+
+                        sw.Start();
+                        foreach (var i in keys)
+                        {
+                            tree0.Search(i);
+                        }
+                        sw.Stop();
+                        Console.WriteLine("seq search time in simple bst: {0}", sw.Elapsed);
+                        
+                        sw.Start();
+                        foreach (var i in keys)
+                        {
+                            tree1.Search(i);
+                        }
+                        sw.Stop();
+                        Console.WriteLine("seq search time in locked bst: {0}", sw.Elapsed);
+
+                        tasksList = keys.Select(arg => new Task(() => { tree2.Search(arg); })).ToList();
+                        sw.Restart();
+                        foreach (var task in tasksList)
+                        {
+                            task.Start();   
+                        }
+                        Task.WaitAll(tasksList.ToArray());
+                        sw.Stop();
+                        tasksList.Clear();
+                        Console.WriteLine("conc search time in locked bst: {0}", sw.Elapsed);
+                        
+                        tasksList = keys.Select(arg => new Task(async () => { await tree3.Search(arg); })).ToList();
+                        sw.Restart();
+                        foreach (var task in tasksList)
+                        {
+                            task.Start();   
+                        }
+                        Task.WaitAll(tasksList.ToArray());
+                        sw.Stop();
+                        tasksList.Clear();
+                        Console.WriteLine("conc search time in async locked bst: {0}", sw.Elapsed);
+                        
                         
                         
                         // tree1.Print();
