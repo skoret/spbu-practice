@@ -135,11 +135,12 @@ data PattOps a = PattConstruction
   { wild    :: Info -> a
   , pconstr :: Info -> String -> [a] -> a
   , named   :: Info -> String -> a
+  , pconst  :: Info -> Int -> a
   }
 
 parsePatt ops = runParser (parserPatt ops) () "pattern"
 parserPatt :: PattOps a -> Parsec String () a
-parserPatt ops = (pConstr ops) <|> (pVar ops) <|> (pWild ops)
+parserPatt ops = (pConstr ops) <|> (pVar ops) <|> (pWild ops) <|> (pInt ops)
   where
     -- TODO: support spaces
     pConstr ops = do
@@ -156,6 +157,13 @@ parserPatt ops = (pConstr ops) <|> (pVar ops) <|> (pWild ops)
       string "_"
       pos <- getPosition
       return $ wild ops (infoFrom pos)
+    pInt :: PattOps a -> Parser a
+    pInt ops = do
+      digits <- many1 digit
+      pos <- getPosition
+      let n = foldl (\acc d -> 10*acc + digitToInt d) 0 digits
+      spaces
+      return $ pconst ops (infoFrom pos) n
 
 {- -------------------- parse case ------------------------------------- -}
 parseCase opsP opsE = runParser (parserCase opsP opsE) () "Case"
