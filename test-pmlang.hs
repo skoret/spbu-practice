@@ -7,6 +7,7 @@ import Data.Hashable (hash)
 import System.Exit
 import PMEval
 
+-- wrap "Что матчим" "список пар случаев" "ожидаемый ответ "
 wrap name what casesS expected =
   TestLabel name $ TestList $ [c1] ++ c2 ++ [c3]
   where
@@ -16,7 +17,7 @@ wrap name what casesS expected =
     c2 = map (\r -> TestCase (assertBool "case is parsable" (isRight r)) ) cases
     (_,cases2) = partitionEithers cases
     c3 = TestCase (assertEqual "evaluated correctly"
-                      (PMEval.eval w cases) expected)
+                      expected (PMEval.eval w cases))
 
 -- mistakes in syntax can be here. Please report the ones.
 tests = TestList
