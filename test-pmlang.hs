@@ -36,6 +36,7 @@ tests = TestList
   --                            ,"A(2,1) -> 42"
   --                            ]
   --      PMatchFail
+  , wrap "test101" "A(B,C)"   ["x -> y"] BadProgram
   ]
 
 main = do
