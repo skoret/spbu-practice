@@ -1,6 +1,7 @@
 module PMEval where
 
 import PMParser
+import Text.Parsec
 
 -- next two structures are used by parser
 optsE :: Ops Exp
@@ -57,7 +58,18 @@ data EvalRez =
 --      should fail with PMatchFail because pattern matching is not exhaustive.
 
 -- For examples about which expression and patterns can be written see tests file.
-eval what cases = OK 42
+eval :: Either Text.Parsec.ParseError Exp -> [Either Text.Parsec.ParseError (Patt, Exp)] -> EvalRez
+-- eval what cases = OK 42
+eval _ [] = PMatchFail
+eval (Right what) ((Right c):cs) = case comp what c of
+    PMatchFail -> eval (Right what) cs
+    t -> t
+    where
+      comp _ (Wild,e) = OK 40 --reduce e
+      comp (Const x) (Pconst y,e) 
+        | x == y = OK 41 --reduce e
+        | otherwise = PMatchFail
+      comp _ _ = PMatchFail
 
 
 

@@ -7,7 +7,7 @@ import PMEval (optsE, optsP)
 rhs = [ "1+2*3", "x+y*3", "1+(field 1 x)+3", "(tag x) * (field 18 y)"
       , "if 0<x then (if 0<y then 42 else 19) else 34"
       ]
-patts = [ "C _", "_", "C(x,y)", "C(D,E(x))", "U(_)" ]
+patts = [ "C _", "_", "C(x,y)", "C(D,E(x))", "U(_)", "3" ]
 cases = [ "_ -> 1"
         , "x -> x"
         , "_ -> 1-2"
@@ -18,11 +18,11 @@ scrutinees = [ "A(1)", "1", "C(B(A(1,2,3,4)))"]
 
 main = do
   print "playground is here"
-  -- mapM_ (\line -> print line >> print (PMParser.parseRhs  optsE    line))
-  --   rhs
+  mapM_ (\line -> print line >> print (PMParser.parseRhs  optsE    line))
+    rhs
   mapM_ (\line -> print line >> print (PMParser.parsePatt optsP    line))
     patts
-  -- mapM_ (\line -> print line >> print (PMParser.parseCase optsP optsE line))
-  --   cases
-  -- mapM_ (\line -> print line >> print (PMParser.parseScrutinee optsE line))
-  --   scrutinees
+  mapM_ (\line -> print line >> print (PMParser.parseCase optsP optsE line))
+    cases
+  mapM_ (\line -> print line >> print (PMParser.parseScrutinee optsE line))
+    scrutinees
