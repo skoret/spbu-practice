@@ -64,17 +64,25 @@ data EvalRez =
 eval :: Exp -> [(Patt, Exp)] -> EvalRez
 -- eval what casargs = OK 42
 eval _ []     = PMatchFail
-eval w (c:cs) = case comp w' c of
-    PMatchFail -> eval w cs
-    t -> t
+eval w ((p,exp):cs) = case match w' p of
+    False -> eval w' cs
+    True -> comp w' (p,exp)
     where
       w' = reduce' w
-      comp _ (Wild,e) = calc $ reduce' e
-      comp x (Named x',e) = calc $ reduce x (Named x', e)
-      comp (Const x) (Pconst y,e) 
-        | x == y = calc $ reduce' e
-        | otherwise = PMatchFail
+      comp _ (Wild, e) = calc $ reduce' e
+      comp x (Named x', e) = calc $ reduce x (Named x', e)
+      comp (Const _) (Pconst _, e) = calc $ reduce' e
+      comp e@(Constr _ _) p@(PConstr _ _, _) = calc $ reduce e p
       comp _ _ = PMatchFail
+
+match :: Exp -> Patt -> Bool
+match _ Wild = True
+match _ (Named _) = True
+match (Const x) (Pconst y) = x == y
+match (Constr en eargs) (PConstr pn pargs) = en == pn 
+                                           && length eargs == length pargs
+                                           && all (uncurry match) (zip eargs pargs)
+match _ _ = False
 
 reduce' :: Exp -> Exp
 reduce' e = reduce (Const 0) (Wild,e)
@@ -106,7 +114,15 @@ reduce e (Named x, Constr name args)      = reduce' $ Constr name $ map (\exp ->
 reduce e (Named x, IfThenElse cond th el) = reduce' $ IfThenElse (reduce e (Named x, cond))
                                               (reduce e (Named x, th)) (reduce e (Named x, el))
 
--- reduce (Constr ename ergs) (Constr pname pargs, e) = 
+reduce e (Pconst _, exp) = reduce' exp
+
+reduce exp@(Constr ename eargs) patt@(PConstr pname pargs, e) = reduceRec exp patt
+    where
+      reduceRec (Constr _ []) (PConstr _ [], e') = reduce' e'
+      reduceRec (Constr en (ea:eas)) (PConstr pn (pa:pas), e') =
+        reduce (Constr en eas) (PConstr pn pas, reduce ea (pa,e'))
+
+
     
 
 calc :: Exp -> EvalRez

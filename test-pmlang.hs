@@ -29,7 +29,7 @@ tests = TestList
   , wrap "test5"   "A(42,1)"  ["A(x,_) -> x", "A(_,x) -> x", "_->42" ] (OK 42)
   , wrap "test6"   "A(1,43)"  ["x -> (field 1 x) - (field 0 x)"] (OK 42)
   , wrap "test7"   "P(1,2,6)" ["x -> if (field 0 x) < (field 1 x) then 42 else 42"] (OK 42)
-  , wrap "test8"   "P(10,10)" ["P(x,y) -> if 6<x then (if 19>y then 42 else 19) else 34" ] (OK 42)
+  , wrap "test8"   "P(10,10)" ["P(x,y) -> if 6<x then (if y<19 then 42 else 19) else 34" ] (OK 42)
   , wrap "test9"   "5"        ["x -> x"] (OK 5)
   -- next should fail with silly eval
   --, wrap "test101" "A(B,C)"   ["A(x,y) -> (tag x) + (tag y)"] (OK $ hash "B" + hash "C")
