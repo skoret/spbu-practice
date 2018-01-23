@@ -3,8 +3,41 @@ module PMEval where
 import PMParser
 
 -- next two structures are used by parser
-optsE = undefined -- for expressions
-optsP = undefined -- for patterns
+optsE :: Ops Exp
+optsE = TermConstruction
+  { int = const Const
+  , tag = const Tag
+  , var = const Var
+  , field = const Field
+  , binop = BinOp
+  , econstr = const Func
+  , ifthenelse = const IfThenElse
+  } -- for expressions
+
+optsP :: PattOps Patt
+optsP = PattConstruction
+  { wild = const Wild
+  , pconstr = const Pconstr
+  , named = const Named
+  , pconst = const Pconst
+  } -- for patterns
+
+data Exp = 
+    Const Int
+  | Tag String
+  | Var String
+  | Field Int String
+  | BinOp BinOpSort Exp Exp
+  | Func String [Exp]
+  | IfThenElse Exp Exp Exp
+  deriving (Show)
+
+data Patt = 
+    Wild
+  | Pconstr String [Patt]
+  | Named String
+  | Pconst Int
+  deriving (Show)
 
 data EvalRez =
     OK Int           -- success

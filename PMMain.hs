@@ -14,14 +14,14 @@ cases = [ "_ -> 1"
         , "C(x,y)-> if ((tag x)=(tag y)) then 1 else 2"
         , "P(x,y) -> if 6<x then (if 19<y then 42 else 19) else 34"
         ]
-scrutinees = [ "A(1)", "1"]
+scrutinees = [ "A(1)", "1", "C(B(A(1,2,3,4)))"]
 
 main = do
   print "playground is here"
   -- mapM_ (\line -> print line >> print (PMParser.parseRhs  optsE    line))
   --   rhs
-  -- mapM_ (\line -> print line >> print (PMParser.parsePatt optsP    line))
-  --   patts
+  mapM_ (\line -> print line >> print (PMParser.parsePatt optsP    line))
+    patts
   -- mapM_ (\line -> print line >> print (PMParser.parseCase optsP optsE line))
   --   cases
   -- mapM_ (\line -> print line >> print (PMParser.parseScrutinee optsE line))
