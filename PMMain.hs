@@ -16,6 +16,7 @@ cases = [ "_ -> 1"
         , "A(2,x) -> 42"
         , "P(_) -> 42"
         , "P(x,y) -> if 6<x then (if 19<y then 42 else 19) else 34"
+        , "A(x,y) -> (tag x) + (tag y)"
         ]
 scrutinees = [ "A(1)", "1", "C(B(A(1,2,3,4)))"]
 

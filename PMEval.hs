@@ -92,6 +92,7 @@ reduce _ (Wild, e) = case e of
     Const x                   -> Const x
     Boolean c                 -> Boolean c
     Tag (Constr name _)       -> Const $ hash name
+    Tag x                     -> Tag x
     Var x                     -> Var x
     Field i c@(Constr _ args) -> case lookup' args i of
       Just e  -> reduce' e
@@ -120,7 +121,7 @@ reduce exp@(Constr ename eargs) patt@(PConstr pname pargs, e) = reduceRec exp pa
     where
       reduceRec (Constr _ []) (PConstr _ [], e') = reduce' e'
       reduceRec (Constr en (ea:eas)) (PConstr pn (pa:pas), e') =
-        reduce (Constr en eas) (PConstr pn pas, reduce ea (pa,e'))
+        reduceRec (Constr en eas) (PConstr pn pas, reduce ea (pa,e'))
 
 
     
