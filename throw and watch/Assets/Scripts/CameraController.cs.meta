@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: 9816fa5131cff4f36a410fedd6dc9bac
-labels:
-- SIXPAutosaver
-- Sixpolys
-timeCreated: 1433224428
-licenseType: Store
+guid: 4da6aa8a9d8bd004b83f7f498dcd2312
+timeCreated: 1523288707
+licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
   executionOrder: 0
