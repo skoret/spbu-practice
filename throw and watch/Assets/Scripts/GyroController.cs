@@ -18,7 +18,7 @@ public class GyroController : MonoBehaviour {
     private Quaternion startRotation;
 
     private Gyroscope gyro;
-    private bool gyroEnabled;
+    private bool gyroSupport;
 
     private bool fixedUpd = false;
     private bool slerp = false;
@@ -28,8 +28,8 @@ public class GyroController : MonoBehaviour {
 
     void Start ()
     {
-        gyroEnabled = SystemInfo.supportsGyroscope;
-        if (gyroEnabled)
+        gyroSupport = SystemInfo.supportsGyroscope;
+        if (gyroSupport)
         {
             gyro = Input.gyro;
             gyro.enabled = true;
@@ -39,7 +39,7 @@ public class GyroController : MonoBehaviour {
 
     private void Update()
     {
-        if (!gyroEnabled)
+        if (!gyroSupport)
             return;
 
         if (!fixedUpd)
@@ -60,7 +60,7 @@ public class GyroController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (!gyroEnabled)
+        if (!gyroSupport)
             return;
 
         if (fixedUpd)
@@ -84,24 +84,28 @@ public class GyroController : MonoBehaviour {
         if (!debug)
             return;
 
-        GUI.Label(new Rect(550.0f, 10.0f, 140.0f, 20.0f), startRotation.ToString());
-        GUI.Label(new Rect(550.0f, 25.0f, 140.0f, 20.0f), gyro.attitude.ToString());
-        GUI.Label(new Rect(550.0f, 40.0f, 140.0f, 20.0f), (gyro.attitude * Quaternion.Inverse(startRotation)).ToString());
-        GUI.Label(new Rect(550.0f, 55.0f, 140.0f, 20.0f), fixedUpd ? "FixedUpdate mode" : "Update mode");
-        GUI.Label(new Rect(550.0f, 70.0f, 140.0f, 20.0f), slerp ? "Slerp is used" : "Slerp isn't used");
+        //GUI.Label(new Rect(550.0f, 10.0f, 140.0f, 20.0f), startRotation.ToString());
+        //GUI.Label(new Rect(550.0f, 25.0f, 140.0f, 20.0f), gyro.attitude.ToString());
+        //GUI.Label(new Rect(550.0f, 40.0f, 140.0f, 20.0f), (gyro.attitude * Quaternion.Inverse(startRotation)).ToString());
+        //GUI.Label(new Rect(550.0f, 55.0f, 140.0f, 20.0f), fixedUpd ? "FixedUpdate mode" : "Update mode");
+        //GUI.Label(new Rect(550.0f, 70.0f, 140.0f, 20.0f), slerp ? "Slerp is used" : "Slerp isn't used");
 
-        if (GUILayout.Button("reset start rotation"))
+        GUILayout.BeginHorizontal();
         {
-            ResetStartRotation();
+            if (GUILayout.Button("reset start rotation"))
+            {
+                ResetStartRotation();
+            }
+            if (GUILayout.Button("update mode: " + fixedUpd))
+            {
+                ChangeUpdateMode();
+            }
+            if (GUILayout.Button("slerp mode: " + slerp))
+            {
+                ChangeSlerpMode();
+            }
         }
-        if (GUILayout.Button("change update mode"))
-        {
-            ChangeUpdateMode();
-        }
-        if (GUILayout.Button("change slerp mode"))
-        {
-            ChangeSlerpMode();
-        }
+        GUILayout.EndHorizontal();
 
     }
 
