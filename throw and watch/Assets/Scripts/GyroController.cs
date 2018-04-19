@@ -20,6 +20,7 @@ public class GyroController : MonoBehaviour {
     private Gyroscope gyro;
     private bool gyroSupport;
 
+
     private bool fixedUpd = false;
     private bool slerp = false;
     private bool debug = true;
@@ -111,7 +112,7 @@ public class GyroController : MonoBehaviour {
 
     private Quaternion ConvertRotation(Quaternion q)
     {
-        return new Quaternion(q.x, q.z, q.y, -q.w);
+        return new Quaternion(q.x, q.y, -q.z, -q.w);
     }
     
     private void ResetStartRotation()
