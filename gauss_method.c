@@ -3,7 +3,7 @@
 #include "matrix.h"
 #include "operations.h"
 
-void gauss_method(matrix *m, double *x) {
+void gauss_method(matrix *m, long double *x) {
 
     int cur_row, cur_col;
 
@@ -12,9 +12,13 @@ void gauss_method(matrix *m, double *x) {
 
         for (int j = i+1; j < m->row; j++) {
         
+            print_row(m, j);
+
             long double coef = m->table[j][i] / m->table[i][i];
             add(m, j, i, -coef, 'r');            
         
+            print_row(m, j);
+
         }
  
     }

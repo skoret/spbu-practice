@@ -3,6 +3,14 @@
 #include "operations.h"
 
 
+void print_row(matrix *m, int row)
+{
+  for (int i=0; i < m->col + 1; i++) {
+    printf("%Lf ", m->table[row][i]);
+  }
+  printf("\n");
+}
+
 void add(matrix *m, int to, int what,long double scalar, char orient)
 {
   if (orient == 'r')
