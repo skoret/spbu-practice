@@ -6,7 +6,7 @@
 #define GAUSS_STRUCTMATRIX_H
 typedef struct matrix
 {
-    double **table;
+    long double **table;
     int col;
     int row;
 }matrix;
