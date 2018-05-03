@@ -26,7 +26,8 @@ int main(int argc, char *argv[]) {
         printf("\n");
     }
 
-    double *x = gauss_method(matr);
+    double x[2];
+    gauss_method(matr, x);
 
     for (int i=0; i<matr->col; i++){
         printf("%f ", x[i]);

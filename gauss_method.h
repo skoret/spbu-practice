@@ -3,6 +3,6 @@
 
 #include "matrix.h"
 
-double* gauss_method(matrix *m);
+void gauss_method(matrix *m, double *x);
 
 #endif
