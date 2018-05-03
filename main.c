@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     gauss_method(matr, x);
 
     for (int i=0; i<matr->col; i++){
-        printf("%f ", x[i]);
+        printf("%Lf ", x[i]);
     }
     printf("\n");
 
