@@ -6,7 +6,7 @@
 #define GAUSS_PROCESSING_H
 
 #include <stdio.h>
-#include "structMatrix.h"
+#include "matrix.h"
 
 matrix* read_input(FILE* filename);
 #endif //GAUSS_PROCESSING_H

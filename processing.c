@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <malloc.h>
-#include "structMatrix.h"
+#include "matrix.h"
 
 matrix* read_input(FILE* input){
     int rows;

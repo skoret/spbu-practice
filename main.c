@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "structMatrix.h"
+#include "matrix.h"
 #include "processing.h"
+#include "gauss_method.h"
 
 int main(int argc, char *argv[]) {
     if (argc != 2){
@@ -24,6 +25,13 @@ int main(int argc, char *argv[]) {
         }
         printf("\n");
     }
+
+    double *x = gauss_method(matr);
+
+    for (int i=0; i<matr->col; i++){
+        printf("%f ", x[i]);
+    }
+    printf("\n");
 
     return 0;
 }

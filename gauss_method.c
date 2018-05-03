@@ -30,6 +30,6 @@ double* gauss_method(matrix *m) {
         }
     }
 
-    return x;
+    return &x;
 
 }
