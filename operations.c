@@ -3,7 +3,7 @@
 #include "operations.h"
 
 
-void add(matrix *m, int to, int what, double scalar, char orient)
+void add(matrix *m, int to, int what,long double scalar, char orient)
 {
   if (orient == 'r')
   {
@@ -21,7 +21,7 @@ void add(matrix *m, int to, int what, double scalar, char orient)
 
 }
 
-void mul(matrix *m, int what, double scalar, char orient)
+void mul(matrix *m, int what, long double scalar, char orient)
 {
   if (orient == 'r')
   {
@@ -42,14 +42,14 @@ void swap(matrix *m, int what, int with, char orient)
 {
   if (orient == 'r')
   {
-    double *tmp  = m->table[what];
+    long double *tmp  = m->table[what];
     m->table[what] = m->table[with];
     m->table[with] = tmp;
     return;
   }
   if (orient == 'c')
   {
-    double tmp;
+    long double tmp;
     for (int i = 0; i < m->row;i++)
     {
       tmp = m->table[i][what];

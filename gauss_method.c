@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "matrix.h"
-
+#include "operations.h"
 
 void gauss_method(matrix *m, double *x) {
 
@@ -12,7 +12,7 @@ void gauss_method(matrix *m, double *x) {
 
         for (int j = i+1; j < m->row; j++) {
         
-            double coef = m->table[j][i] / m->table[i][i];
+            long double coef = m->table[j][i] / m->table[i][i];
             add(m, j, i, -coef, 'r');            
         
         }
