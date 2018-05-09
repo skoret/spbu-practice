@@ -9,15 +9,34 @@ public class PoseController : MonoBehaviour {
 
     #region [Private fields]
 
-    private bool poseEnabled = false;
-    private bool kFilter = false;
+    private bool poseEnabled = true;
     private Gyroscope gyro;
 
     [SerializeField]
-    private float speed, q, r;
+    private float speed, lpFactor, hpFactor, timeReset;
 
-    private KalmanFilter kf;
+    private bool lowpass = true;
+    private bool highpass = true;
 
+    private float time = 0.0f;
+    private float timeOld = 0.0f;
+
+    #region [CalculatedVariables]
+
+    enum Value
+    {
+        Acceleration,
+        Velocity,
+        Position
+    }
+
+    private Vector3 acceleration;
+    private Vector3 velocity;
+    private Vector3 position;
+
+    #endregion
+
+    private bool filterOrder = true;
     private bool debug = true;
 
     #endregion
@@ -29,44 +48,125 @@ public class PoseController : MonoBehaviour {
             gyro = Input.gyro;
             gyro.enabled = true;
             ResetPosition();
+
+            InvokeRepeating("ResetVars", timeReset, timeReset);
+
         }
     }
 
     void Update ()
     {
-        Debug.Log(Time.deltaTime.ToString() + " | " + gyro.userAcceleration);
-
         if (!poseEnabled)
             return;
         
-        if (kFilter)
-        {
-            kf.PoseEstimate(gyro.userAcceleration, Time.deltaTime);
+        float dt = Time.deltaTime;
 
-            transform.position = kf.GetPose() * speed;
+        if (filterOrder)
+        {
+            if (lowpass) acceleration = LowPassFilter(-1 * gyro.userAcceleration, Value.Acceleration);
+            if (highpass) acceleration = HighPassFilter(-1 * gyro.userAcceleration, dt, Value.Acceleration);
         }
+        else
+        {
+            if (highpass) acceleration = HighPassFilter(-1 * gyro.userAcceleration, dt, Value.Acceleration);
+            if (lowpass) acceleration = LowPassFilter(-1 * gyro.userAcceleration, Value.Acceleration);
+        }
+        if (!lowpass && !highpass) acceleration = -1 * gyro.userAcceleration;
+
+        position = HighPassFilter((velocity * dt + acceleration * dt * dt * 0.5f) * speed, dt, Value.Position);
+
+        velocity = HighPassFilter(acceleration * dt, dt, Value.Velocity);
+
+        transform.Translate(ConvertPosition(position));
     }
 
+    private Vector3 LowPassFilter(Vector3 new_val, Value val)
+    {
+        Vector3 old_val = Vector3.zero;
+
+        switch (val)
+        {
+            case Value.Acceleration:
+                old_val = acceleration;
+                break;
+            case Value.Velocity:
+                old_val = velocity;
+                break;
+            case Value.Position:
+                old_val = position;
+                break;
+        }
+
+        return lpFactor * old_val + (1 - lpFactor) * new_val;
+    }
+
+    private Vector3 HighPassFilter(Vector3 new_val, float dt, Value val)
+    {
+        Vector3 old_val = Vector3.zero;
+
+        switch (val)
+        {
+            case Value.Acceleration:
+                old_val = acceleration;
+                break;
+            case Value.Velocity:
+                old_val = velocity;
+                break;
+            case Value.Position:
+                old_val = position;
+                break;
+        }
+
+        float factor = hpFactor / (hpFactor + dt);
+
+        return old_val + factor * (new_val - old_val);
+    }
+    
     private Vector3 ConvertPosition(Vector3 pos)
     {
         return new Vector3(pos.x, pos.z, pos.y);
     }
 
-    private void kFilterEnable()
-    {
-        kFilter = !kFilter;
-    }
-    
+    #region [EnableFuncs]
+
     private void PoseEnable()
     {
         poseEnabled = !poseEnabled;
     }
 
+    private void lpEnable()
+    {
+        lowpass = !lowpass;
+    }
+
+    private void hpEnable()
+    {
+        highpass = !highpass;
+    }
+
+    #endregion
+
+    #region [ResetFuncs]
+
+    private void ResetVars()
+    {
+        acceleration = Vector3.zero;
+        velocity = Vector3.zero;
+        position = Vector3.zero;
+    }
+
     private void ResetPosition()
     {
-        transform.position = new Vector3(0, 10, 0);
+        ResetVars();
 
-        kf = new KalmanFilter(q, r);
+        transform.position = new Vector3(0, 10, 0);
+    }
+
+    #endregion
+
+    private void FilterOrder()
+    {
+        filterOrder = !filterOrder;
     }
 
     private void OnGUI()
@@ -84,19 +184,15 @@ public class PoseController : MonoBehaviour {
             {
                 ResetPosition();
             }
-            if (GUILayout.Button("kFilter: " + kFilter))
+            if (GUILayout.Button("lp <-> hp: " + filterOrder))
             {
-                kFilterEnable();
+                FilterOrder();
             }
-
             GUILayout.Label("user accel: " + gyro.userAcceleration.ToString());
 
-            if (kFilter)
-            {
-                GUILayout.Label("kf acc: " + kf.GetAcc());
-                GUILayout.Label("kf vel: " + kf.GetVel());
-                GUILayout.Label("kf pose: " + kf.GetPose());
-            }
+            GUILayout.Label("acc: " + acceleration);
+            GUILayout.Label("vel: " + velocity);
+            GUILayout.Label("pose: " + position);
         }
         GUILayout.EndVertical();
     }
