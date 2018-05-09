@@ -451,13 +451,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2103049537}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b18861099f17b1d47b8a730917ec7df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlerpFilterFactor: 0
-  speed: 0
+  SlerpFilterFactor: 0.9
+  speed: 1
+  alpha: 0
 --- !u!114 &2103049543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,8 +470,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ed7e0fc58e2b754f8b16969b94c238c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlerpFilterFactor: 15
-  speed: 2
-  FilterFactor: 0.9
+  speed: 500
+  lpFactor: 0.9
+  hpFactor: 0.279
+  timeReset: 5
   q: 0.01
   r: 0.01
