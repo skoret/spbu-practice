@@ -8,7 +8,7 @@ public class RotateController : MonoBehaviour {
 
     #region [Private fields]
 
-    private bool rotateEnabled = false;
+    private bool rotateEnabled = true;
     private Gyroscope gyro;
 
     [SerializeField]

@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0
 // http://www.apache.org/licenses/LICENSE-2.0
 
-using Kalman;
 using UnityEngine;
 
 public class PoseController : MonoBehaviour {
@@ -35,8 +34,7 @@ public class PoseController : MonoBehaviour {
     private Vector3 position;
 
     #endregion
-
-    private bool filterOrder = true;
+    
     private bool debug = true;
 
     #endregion
@@ -60,17 +58,9 @@ public class PoseController : MonoBehaviour {
             return;
         
         float dt = Time.deltaTime;
-
-        if (filterOrder)
-        {
-            if (lowpass) acceleration = LowPassFilter(-1 * gyro.userAcceleration, Value.Acceleration);
-            if (highpass) acceleration = HighPassFilter(-1 * gyro.userAcceleration, dt, Value.Acceleration);
-        }
-        else
-        {
-            if (highpass) acceleration = HighPassFilter(-1 * gyro.userAcceleration, dt, Value.Acceleration);
-            if (lowpass) acceleration = LowPassFilter(-1 * gyro.userAcceleration, Value.Acceleration);
-        }
+        
+        if (lowpass) acceleration = LowPassFilter(-1 * gyro.userAcceleration, Value.Acceleration);
+        if (highpass) acceleration = HighPassFilter(-1 * gyro.userAcceleration, dt, Value.Acceleration);
         if (!lowpass && !highpass) acceleration = -1 * gyro.userAcceleration;
 
         position = HighPassFilter((velocity * dt + acceleration * dt * dt * 0.5f) * speed, dt, Value.Position);
@@ -164,11 +154,6 @@ public class PoseController : MonoBehaviour {
 
     #endregion
 
-    private void FilterOrder()
-    {
-        filterOrder = !filterOrder;
-    }
-
     private void OnGUI()
     {
         if (!debug)
@@ -183,10 +168,6 @@ public class PoseController : MonoBehaviour {
             if (GUILayout.Button("reset position"))
             {
                 ResetPosition();
-            }
-            if (GUILayout.Button("lp <-> hp: " + filterOrder))
-            {
-                FilterOrder();
             }
             GUILayout.Label("user accel: " + gyro.userAcceleration.ToString());
 
