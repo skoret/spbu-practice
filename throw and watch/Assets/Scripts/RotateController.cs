@@ -16,8 +16,7 @@ public class RotateController : MonoBehaviour {
 
     private Quaternion startRotation;
     private Quaternion rotation;
-
-    private bool fixedUpd = false;
+    
     private bool slerp = false;
     private bool debug = true;
 
@@ -30,7 +29,6 @@ public class RotateController : MonoBehaviour {
             gyro = Input.gyro;
             gyro.enabled = true;
             ResetStartRotation();
-            Debug.Log(gyro.attitude);
         }
     }
 
@@ -39,19 +37,16 @@ public class RotateController : MonoBehaviour {
         if (!rotateEnabled || !gyro.enabled)
             return;
 
-        if (!fixedUpd)
+        rotation = ConvertRotation(Quaternion.Inverse(startRotation) * gyro.attitude);
+
+        if (slerp)
         {
-            rotation = ConvertRotation(Quaternion.Inverse(startRotation) * gyro.attitude);
-            
-            if (slerp)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
-                    SlerpFilterFactor * Time.deltaTime);
-            }
-            else
-            {
-                transform.rotation = rotation;
-            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation,
+                SlerpFilterFactor * Time.deltaTime);
+        }
+        else
+        {
+            transform.rotation = rotation;
         }
     }
     
@@ -59,6 +54,8 @@ public class RotateController : MonoBehaviour {
     {
         return new Quaternion(q.x, q.z, q.y, -q.w);
     }
+
+    #region [EnableFuncs]
 
     private void RotateEnable()
     {
@@ -69,6 +66,8 @@ public class RotateController : MonoBehaviour {
     {
         slerp = !slerp;
     }
+    
+    #endregion
 
     private void ResetStartRotation()
     {
@@ -80,7 +79,6 @@ public class RotateController : MonoBehaviour {
     {
         if (!debug)
             return;
-
 
         GUILayout.BeginArea(new Rect(Screen.width - 150.0f, 0.0f, 150.0f, 300.0f));
         {
