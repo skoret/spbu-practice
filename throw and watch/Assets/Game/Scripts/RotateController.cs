@@ -12,13 +12,13 @@ public class RotateController : MonoBehaviour {
     private Gyroscope gyro;
 
     [SerializeField]
-    private float SlerpFilterFactor, speed;
+    private float SlerpFilterFactor;
 
     private Quaternion startRotation;
     private Quaternion rotation;
     
     private bool slerp = false;
-    private bool debug = true;
+    private bool debug = false;
 
     #endregion
     
@@ -28,11 +28,11 @@ public class RotateController : MonoBehaviour {
         {
             gyro = Input.gyro;
             gyro.enabled = true;
-            ResetStartRotation();
+            ResetRotation();
         }
     }
 
-    private void Update()
+    void Update()
     {
         if (!rotateEnabled || !gyro.enabled)
             return;
@@ -69,7 +69,7 @@ public class RotateController : MonoBehaviour {
     
     #endregion
 
-    private void ResetStartRotation()
+    public void ResetRotation()
     {
         startRotation = gyro.attitude;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
@@ -88,15 +88,12 @@ public class RotateController : MonoBehaviour {
             }
             if (GUILayout.Button("reset start rotation"))
             {
-                ResetStartRotation();
+                ResetRotation();
             }
             if (GUILayout.Button("slerp mode: " + slerp))
             {
                 SlerpEnable();
             }
-            GUILayout.Label("gyro attitude:" + ConvertRotation(gyro.attitude).ToString());
-            GUILayout.Label("ref attitude:" + ConvertRotation(Quaternion.Inverse(startRotation) * gyro.attitude).ToString());
-            GUILayout.Label("gyro rotation rate:" + ConvertRotation(Quaternion.Euler(gyro.rotationRate * speed)).ToString());
             GUILayout.Label("rotation:" + transform.rotation.ToString());
         }
         GUILayout.EndArea();

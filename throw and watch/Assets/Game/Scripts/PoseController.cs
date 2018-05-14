@@ -35,7 +35,7 @@ public class PoseController : MonoBehaviour {
 
     #endregion
     
-    private bool debug = true;
+    private bool debug = false;
 
     #endregion
 
@@ -145,7 +145,7 @@ public class PoseController : MonoBehaviour {
         position = Vector3.zero;
     }
 
-    private void ResetPosition()
+    public void ResetPosition()
     {
         ResetVars();
 
