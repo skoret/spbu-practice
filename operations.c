@@ -11,6 +11,9 @@ void print_row(matrix *m, int row)
   printf("\n");
 }
 
+/*
+  add row/column to row/column with scalar
+*/
 void add(matrix *m, int to, int what,long double scalar, char orient)
 {
   if (orient == 'r')
@@ -29,6 +32,9 @@ void add(matrix *m, int to, int what,long double scalar, char orient)
 
 }
 
+/*
+  multiplication row/column by scalar
+*/
 void mul(matrix *m, int what, long double scalar, char orient)
 {
   if (orient == 'r')
@@ -46,6 +52,9 @@ void mul(matrix *m, int what, long double scalar, char orient)
   printf("Try again. Wrong orient!");
 }
 
+/*
+  swap two rows/columns
+*/
 void swap(matrix *m, int what, int with, char orient)
 {
   if (orient == 'r')
