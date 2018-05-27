@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include "matrix.h"
 #include "operations.h"
 
@@ -76,4 +77,17 @@ void swap(matrix *m, int what, int with, char orient)
     return;
   }
   printf("Try again. Wrong orient!");
+}
+
+int argmax(matrix *m, int col, int row)
+{
+  int max = row;
+  for (int i = row + 1; i < m->row; i++)
+  {
+	  if (fabsl(m->table[i][col]) > fabsl(m->table[max][col]))
+	  {
+		  max = i;
+	  }
+  }
+  return max;
 }

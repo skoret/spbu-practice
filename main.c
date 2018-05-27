@@ -18,14 +18,6 @@ int main(int argc, char *argv[]) {
 
     matrix* matr = read_input(input);
 
-    printf("%dx%d\n", matr->row, matr->col);
-    for (int i=0; i < matr->col; i++){
-        for (int j = 0; j < matr->row + 1; j ++){
-            printf("%Lf ", matr->table[i][j]);
-        }
-        printf("\n");
-    }
-
     long double x[matr->col];
     gauss_method(matr, x);
 

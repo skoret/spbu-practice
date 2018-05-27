@@ -8,6 +8,9 @@ void gauss_method(matrix *m, long double *x) {
     // forward run
     for (int i = 0; i < m->col; i++) {
 
+        int max_coef_idx = argmax(m, i, i); // find row with max leading coefficient
+        swap(m, i, max_coef_idx, 'r'); // and place it on first place
+
         for (int j = i + 1; j < m->row; j++) {
 
             long double coef = m->table[j][i] / m->table[i][i]; // calculate leading coefficient
@@ -15,6 +18,17 @@ void gauss_method(matrix *m, long double *x) {
 
         }
  
+    }
+
+    // check last row
+    if (m->table[m->row - 1][m->col]) {
+        for (int i = 0; i < m->col; i++) {
+            if (m->table[m->row - 1][i]) {
+                break;
+            }
+        }
+        printf("There is no solutions.\n");
+        return;
     }
 
     // backward run
