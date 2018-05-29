@@ -22,13 +22,16 @@ void gauss_method(matrix *m, long double *x) {
 
     // check last row
     if (m->table[m->row - 1][m->col]) {
+        int flag = 1;
         for (int i = 0; i < m->col; i++) {
             if (m->table[m->row - 1][i]) {
-                break;
+                flag = 0;
             }
         }
-        printf("There is no solutions.\n");
-        return;
+        if (flag) {
+            printf("There is no solutions.\n");
+            return;
+        }
     }
 
     // backward run

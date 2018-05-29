@@ -7,6 +7,7 @@
 int main(int argc, char *argv[]) {
     if (argc != 2){
         printf("Provide exactly 1 arg - filename\n");
+        exit(1);
     }
 
     FILE *input;
