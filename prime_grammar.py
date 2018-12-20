@@ -110,9 +110,33 @@ class grammar1(grammar):
     
         return all(symbol == '0' for symbol in string)
 
+class grammar1_1(grammar):
+
+    def parse(self, number):
+        self.count_operations = 0
+        self.max_length = 2 + number * 2
+        string  = '[init]'
+
+        string = self.apply_rule(self.rules[0], string)
+        while (self.count_operations < number - 1):
+            string = self.apply_rule(self.rules[-1], string)
+        done = False
+        while not done:
+            done = True
+
+            for rule in self.rules:
+                    new = self.apply_rule(rule, string)
+                    if (new != string):
+                        done = False
+                        string = new
+                        break
+    
+        return all(symbol == '0' for symbol in string[1:-2])
+
 grammars = {
     0 : grammar0,
-    1 : grammar1
+    1 : grammar1,
+    11: grammar1_1
 }
 
 def main():
