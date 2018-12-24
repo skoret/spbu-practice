@@ -46,42 +46,26 @@ class grammar():
 class grammar0(grammar):
 
     def parse(self, number):
-        self.max_length = number + number // 2 + 9
-        string = '[init]'
         self.count_operations = 0
+        self.max_length = 2 + number * 2
+        string  = '[init]'
 
-        if (number == 2):
-            string = self.apply_rule(self.rules[0], string)
-        else:
-            string = self.apply_rule(self.rules[1], string)
-            
-            gen1 = True
-            while (self.count_operations < number - 2):
-                if (gen1):
-                    string = self.apply_rule(self.rules[-2], string)
-                    gen1 = False
-                else:
-                    string = self.apply_rule(self.rules[-1], string)
-                    gen1 = True
-            
-            if (gen1):
-                string = self.apply_rule(self.rules[2], string)
-            else:
-                string = self.apply_rule(self.rules[3], string)
+        string = self.apply_rule(self.rules[0], string)
+        while (self.count_operations < number - 1):
+            string = self.apply_rule(self.rules[-1], string)
+        done = False
+        while not done:
+            done = True
 
-            done = False
-            while not done:
-                done = True
-
-                for rule in self.rules:
+            for rule in self.rules:
                     new = self.apply_rule(rule, string)
-
                     if (new != string):
                         done = False
                         string = new
                         break
-        
-        return all(symbol == "0" for symbol in string)
+    
+        return all(symbol == '0' for symbol in string)
+
 
 class grammar1(grammar):
 
@@ -110,40 +94,16 @@ class grammar1(grammar):
     
         return all(symbol == '0' for symbol in string)
 
-class grammar1_1(grammar):
-
-    def parse(self, number):
-        self.count_operations = 0
-        self.max_length = 2 + number * 2
-        string  = '[init]'
-
-        string = self.apply_rule(self.rules[0], string)
-        while (self.count_operations < number - 1):
-            string = self.apply_rule(self.rules[-1], string)
-        done = False
-        while not done:
-            done = True
-
-            for rule in self.rules:
-                    new = self.apply_rule(rule, string)
-                    if (new != string):
-                        done = False
-                        string = new
-                        break
-    
-        return all(symbol == '0' for symbol in string[1:-2])
-
 grammars = {
     0 : grammar0,
-    1 : grammar1,
-    11: grammar1_1
+    1 : grammar1
 }
 
 def main():
-    parser = ArgumentParser(prog = 'prime_grammar.py', description = 'Free (32 rules) and context sensitive (33 rules) grammars for prime numbers.\nParsing and derive.')
+    parser = ArgumentParser(prog = 'prime_grammar.py', description = 'Free (21 rules) and context sensitive (31 rules) grammars for prime numbers.\nParsing and derive.')
     parser.add_argument('-n', '--number', type = int, help = 'number to check for prime', default = -1)
     parser.add_argument('-t', '--type', type = int, help = 'grammar\'s type: 0 -- free; 1 -- context sensitive', default = 1)
-    parser.add_argument('-o', '--output', type=str, help='file for output', default='')
+    parser.add_argument('-o', '--output', type=str, help='file for output', default='log.txt')
     parser.add_argument('-v', '--verbose', help = 'verbose derive', action='store_true')
     
     args = parser.parse_args()
@@ -162,9 +122,6 @@ def main():
             if (g.parse(number)):
                 print('{} | count of operations: {}'.format(number, g.count_operations))
             number += 1
-
-            # if (number == 10):
-            #     break
 
 if (__name__ == "__main__"):
     main()

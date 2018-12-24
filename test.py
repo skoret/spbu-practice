@@ -1,7 +1,6 @@
-from tqdm import tqdm
 from argparse import ArgumentParser
 
-from prime_grammar import *
+from prime_grammar import grammar0, grammar1, grammar
 
 prime = []
 
@@ -16,7 +15,7 @@ def erat(maxn):
 
 def test(g: grammar, maxn: int):
     print('----- Test {} -----'.format(g.__class__.__name__))
-    g_result = [g.parse(i) for i in tqdm(range(2, maxn + 1))]
+    g_result = [g.parse(i) for i in range(2, maxn + 1)]
     check = [g_res == cor for g_res, cor in zip(g_result, prime[2:maxn+1])]
     map(lambda num, res:\
         print('wa for {} ({})'.format(num + 2, prime[num + 2]) if res else None), check)

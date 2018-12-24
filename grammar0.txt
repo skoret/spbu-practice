@@ -1,43 +1,27 @@
-[init] -> 00
-[init] -> #000[gen1]-#
+[init] -> #a[gen]#
+[gen] -> b+
 
-[gen1] -> [lsh]
-[gen2] -> [lsh]
+b+# -> b*#
+bb* -> b*c
+ab* -> a*a-
+aa* -> a*a-
+#a* -> #a+
 
--[lsh] -> [lsh]-
-x[lsh] -> [lsh]x
-0[lsh] -> x[rsh]
-#[lsh] -> #[cln]
+-a -> a-
+-b -> b-
+-c -> b
+-# -> #
 
-[rsh]x -> x[rsh]
-[rsh]- -> -[rsh]
-[rsh]# -> [check]#
-[rsh]+ -> [check]+
++a -> a+
++b -> b+
++c -> b?
 
--[check] -> [lsh]+
-x[check] -> [lch]x
+?c -> ^c
+b^ -> ^b
+a^ -> a*
 
-x[lch] -> [lch]x
-0[lch] -> 0[reset]
+a+# -> 0
+a0 -> 00
+#0 -> 0
 
-[reset]x -> x[reset]
-[reset]+ -> -[reset]
-[reset]- -> -[reset]
-[reset]# -> [lsh]#
-
-[cln]x -> 0[cln]
-[cln]- -> -[cln]
-[cln]+ -> -[cln]
-[cln]# -> [step]#
-
--[step] -> [step]-
-0[step]- -> 0[stop?]
-
-[stop?]- -> [lsh]-
-[stop?]# -> [fin]
-
-0[fin] -> [fin]0
-#[fin] -> 
-
-[gen1] -> 0[gen2]-
-[gen2] -> 0[gen1]
+[gen] -> b[gen]
