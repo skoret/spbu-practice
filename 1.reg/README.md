@@ -1,7 +1,7 @@
-### Task #1: *Registration*
+## Task #1: *Registration* :scroll:
 ---
     1. Fill the registration form
-    2. Receive email with *noname* file
+    2. Receive email with `noname` file
     3. Change file' header:
 ![noname](img/noname.hex.jpg)
 

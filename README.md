@@ -1,4 +1,4 @@
-# reversecup2019
+# reversecup2019 :squirrel:
 
 [Saint-Petersburg State University' Reverse Cup 2019](http://cup19.reverseboom.club/)
 
