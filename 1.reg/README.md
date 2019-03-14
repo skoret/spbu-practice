@@ -1,5 +1,5 @@
 ## Task #1: *Registration* :scroll:
----
+
     1. Fill the registration form
     2. Receive email with `noname` file
     3. Change file' header:
