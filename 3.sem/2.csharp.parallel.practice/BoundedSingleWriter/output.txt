@@ -1,0 +1,68 @@
+write value = 258 in #0 register
+write value = 441 in #1 register
+read from 0 thread on 0 interation: (0, 0)
+write value = 157 in #0 register
+read from 1 thread on 3 interation: (258, 441)
+write value = 592 in #1 register
+write value = 683 in #0 register
+write value = 324 in #1 register
+write value = 236 in #0 register
+read from 0 thread on 6 interation: (683, 324)
+write value = 88 in #1 register
+write value = 430 in #1 register
+read from 1 thread on 9 interation: (236, 88)
+write value = 550 in #0 register
+write value = 583 in #0 register
+write value = 827 in #1 register
+write value = 309 in #1 register
+read from 0 thread on 12 interation: (583, 309)
+write value = 415 in #0 register
+write value = 790 in #0 register
+read from 1 thread on 15 interation: (790, 309)
+write value = 804 in #1 register
+write value = 588 in #0 register
+write value = 852 in #1 register
+write value = 930 in #0 register
+write value = 269 in #1 register
+read from 0 thread on 18 interation: (588, 852)
+write value = 998 in #0 register
+write value = 552 in #1 register
+read from 1 thread on 21 interation: (930, 269)
+register #0 and his log:
+(998, [True,True], True, [930,269])
+[00:00:00.0231397, 258]
+[00:00:00.0254749, 157]
+[00:00:00.0256550, 683]
+[00:00:00.0257774, 236]
+[00:00:00.0276721, 550]
+[00:00:00.0279094, 583]
+[00:00:00.0282819, 415]
+[00:00:00.0284597, 790]
+[00:00:00.0289249, 588]
+[00:00:00.0291897, 930]
+[00:00:00.0294088, 998]
+----------------------------
+register #1 and his log:
+(552, [True,False], True, [998,269])
+[00:00:00.0231397, 441]
+[00:00:00.0255374, 592]
+[00:00:00.0256907, 324]
+[00:00:00.0258722, 88]
+[00:00:00.0271531, 430]
+[00:00:00.0280302, 827]
+[00:00:00.0281528, 309]
+[00:00:00.0286850, 804]
+[00:00:00.0289627, 852]
+[00:00:00.0292239, 269]
+[00:00:00.0294666, 552]
+----------------------------
+read-log:
+< values = (0, 0), time = 00:00:00.0087320 >
+< values = (258, 441), time = 00:00:00.0252529 >
+< values = (683, 324), time = 00:00:00.0257596 >
+< values = (236, 88), time = 00:00:00.0269497 >
+< values = (583, 309), time = 00:00:00.0282330 >
+< values = (790, 309), time = 00:00:00.0284664 >
+< values = (588, 852), time = 00:00:00.0291701 >
+< values = (930, 269), time = 00:00:00.0293871 >
+=============================
