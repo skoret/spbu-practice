@@ -1,0 +1,43 @@
+[init] -> 00
+[init] -> Q[gen]#
+0[gen]# -> [lsh]-#
+
+-[lsh] -> [lsh]-
+x[lsh] -> [lsh]x
+0[lsh] -> x[rsh]
+Q[lsh] -> %[rsh]
+%[lsh] -> Q[cln]
+
+[rsh]x -> x[rsh]
+[rsh]- -> -[rsh]
+[rsh]# -> [check]#
+[rsh]+ -> [check]+
+
+-[check] -> [lsh]+
+x[check] -> [lch]x
+
+x[lch] -> [lch]x
+0[lch] -> 0[reset]
+Q[lch] -> Q[reset]
+
+[reset]x -> x[reset]
+[reset]+ -> -[reset]
+[reset]- -> -[reset]
+[reset]# -> [lsh]#
+
+[cln]x -> 0[cln]
+[cln]+ -> -[cln]
+[cln]- -> -[cln]
+[cln]# -> [step]#
+
+-[step] -> [step]-
+0[step] -> [stop?]-
+Q[step] -> 0[fin]
+
+0[stop?] -> 0[lsh]
+Q[stop?] -> 0[fin]
+
+[fin]- -> 0[fin]
+[fin]# -> 0
+
+[gen] -> 0[gen]
