@@ -1,3 +1,3 @@
 [submodule "3.sem/1.eduos"]
-	path = 3.sem/1.eduos
+	path = 3.sem/1.c.eduos
 	url = https://github.com/ImmortalTurtle/eduos.git
