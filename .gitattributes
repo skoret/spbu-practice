@@ -1,1 +1,12 @@
 *.ipynb linguist-vendored
+
+*.shader linguist-vendored
+*.cs.meta linguist-vendored
+*.mat.meta linguist-vendored
+*.psd.meta linguist-vendored
+*.png.meta linguist-vendored
+*.unity linguist-vendored
+*.asset linguist-vendored
+*.mat linguist-vendored
+*.prefab linguist-vendored
+*.cginc linguist-vendored
